@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import * as data from './ids.json';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DefaultLoaderService {
 
-  constructor() { }
+  public loadedIds: any;
+  constructor() {
+    this.loadedIds = JSON.parse(JSON.stringify(data));
+  }
+
+  public idp(code: string ) : string {
+    return this.loadedIds[`${code}`];
+  }
 }
