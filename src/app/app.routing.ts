@@ -4,7 +4,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 
 export const AppRoutes: Routes = [
   {
-    path: 'academics',
+    path: 'udg',
     component: AdminLayoutComponent,
     children: [{
       path: '',

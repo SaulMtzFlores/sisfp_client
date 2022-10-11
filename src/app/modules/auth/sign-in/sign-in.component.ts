@@ -14,6 +14,6 @@ export class SignInComponent implements OnInit {
   }
 
   login(){
-    this.router.navigate(['/academics/home'])
+    this.router.navigate(['/udg/home'])
   }
 }
