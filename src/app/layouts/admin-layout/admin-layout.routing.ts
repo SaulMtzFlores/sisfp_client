@@ -8,12 +8,10 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { MapsComponent } from '../../pages/maps/maps.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
-import { SignInComponent } from 'app/modules/auth/sign-in/sign-in.component';
-import { SignUpComponent } from 'app/modules/auth/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from 'app/modules/auth/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from 'app/modules/auth/reset-password/reset-password.component';
+
 import { UsersComponent } from 'app/modules/users/users/users.component';
 import { UserViewComponent } from 'app/modules/users/user-view/user-view.component';
+import { HomeComponent } from 'app/modules/landing/home/home.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -24,29 +22,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    {
-      path: 'auth',
-      loadChildren: () => import('../../modules/auth/auth.module').then(m=> m.AuthModule),
-      children: [
-        { path: '', pathMatch: 'full', redirectTo:'sign-in' },
-        {
-          path: 'sign-in',
-          component: SignInComponent
-        },
-        {
-          path: 'sign-up',
-          component: SignUpComponent
-        },
-        {
-          path: 'forgot-password',
-          component: ForgotPasswordComponent
-        },
-        {
-          path: 'reset-password',
-          component: ResetPasswordComponent
-        }
-      ]
-    },
     {
       path: 'users',
       loadChildren: () => import('../../modules/users/users.module').then(m => m.UsersModule),
@@ -69,5 +44,15 @@ export const AdminLayoutRoutes: Routes = [
         }
       ]
     },
-    { path: '**', pathMatch:'full', redirectTo: 'dashboard'}
+    {
+      path: 'home',
+      loadChildren: () => import('../../modules/landing/landing.module').then(m => m.LandingModule),
+      children: [
+        {
+          path: '',
+          component: HomeComponent
+        }
+      ]
+    },
+    { path: '**', pathMatch:'full', redirectTo: 'home'}
 ];

@@ -7138,7 +7138,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .alert.alert-danger {
     background-color: #f1926e; }
   .alert.alert-warning {
-    background-color: #fccf71; }
+    background-color: #000; }
   .alert.alert-info {
     background-color: #66c4de; }
   .alert.alert-primary {

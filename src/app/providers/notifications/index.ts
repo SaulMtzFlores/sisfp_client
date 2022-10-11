@@ -26,7 +26,7 @@ export class NotificationsService {
       break;
       case 'success':
         this.toastr.success(
-          `<span data-notify="icon" class="nc-icon nc-check-2"></span><span data-notify="message">${title}</span>`,
+          `<span data-notify="icon" class="nc-icon nc-check-2"></span><span>${title}</span>`,
             "",
             {
               timeOut,
