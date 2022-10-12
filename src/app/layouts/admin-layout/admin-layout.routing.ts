@@ -17,6 +17,9 @@ import { CoursePostsComponent } from 'app/modules/posts/course-posts/course-post
 import { CoordinationsComponent } from 'app/modules/coordinations/coordinations/coordinations.component';
 import { CoordinationComponent } from 'app/modules/coordinations/coordination/coordination.component';
 import { CoordinationViewComponent } from 'app/modules/coordinations/coordination-view/coordination-view.component';
+import { CoursesComponent } from 'app/modules/courses/courses/courses.component';
+import { CourseViewComponent } from 'app/modules/courses/course-view/course-view.component';
+import { CourseComponent } from 'app/modules/courses/course/course.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -76,7 +79,34 @@ export const AdminLayoutRoutes: Routes = [
           path: 'see/:id',
           component: CoordinationViewComponent
         },
+        {
+          path: 'edit/:id',
+          component: CoordinationComponent
+        },
         { path: '**', pathMatch: 'full', redirectTo:'coordinations'}
+      ]
+    },
+    {
+      path: 'courses',
+      loadChildren: () => import('../../modules/courses/courses.module').then(m => m.CoursesModule),
+      children: [
+        {
+          path: '',
+          component: CoursesComponent
+        },
+        {
+          path: 'see/:id',
+          component: CourseViewComponent
+        },
+        {
+          path: 'edit/:id',
+          component: CourseComponent
+        },
+        {
+          path: 'add',
+          component: CourseComponent
+        },
+        { path: '**', pathMatch:'full', redirectTo: 'courses'}
       ]
     },
     {
