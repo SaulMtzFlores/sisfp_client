@@ -4,7 +4,7 @@ import { RouteInfo } from '../interfaces';
 
 export const ROUTES: RouteInfo[] = [
     { path: 'home', title: 'Inicio', icon: 'nc-sun-fog-29', class:''},
-    { path: 'coordinations', title: 'Coordinación', icon:'nc-bank', class: '' },
+    { path: 'coordinations', title: 'Coordinaciones', icon:'nc-bank', class: '' },
     { path: 'courses', title: 'Cursos', icon: 'nc-book-bookmark', class:''},
 ];
 
