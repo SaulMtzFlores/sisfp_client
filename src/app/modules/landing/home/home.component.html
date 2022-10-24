@@ -1,1 +1,8 @@
-<p>home works!</p>
+<div *ngIf="!loading">
+  <h2>Hora cliente:</h2>
+  <p>{{clientDate|esdate}}</p>
+  <p>{{clientDate|secms}}</p>
+  <h2>Hora servidor:</h2>
+  <p>{{serverDate.time|esdate}}</p>
+  <p>{{serverDate.time|secms}}</p>
+</div>

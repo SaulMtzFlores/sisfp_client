@@ -15,7 +15,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 
 import { ProvidersModule } from "./providers/providers.module";
-
+import { ApiProvider } from "./providers/api";
+import { HttpClientModule } from "@angular/common/http";
+import { PipesModule } from "./pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -26,16 +28,20 @@ import { ProvidersModule } from "./providers/providers.module";
   imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes,{
-      useHash: true
+      useHash: false
     }),
     SidebarModule,
     NavbarModule,
     ToastrModule.forRoot(),
     FooterModule,
     FixedPluginModule,
-    ProvidersModule
+    ProvidersModule,
+    HttpClientModule,
+    PipesModule
   ],
-  providers: [],
+  providers: [
+    ApiProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

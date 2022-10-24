@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'unknown'
+  api: 'https://consulta-udg-server.herokuapp.com'
 };

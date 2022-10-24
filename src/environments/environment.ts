@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  api: 'unknown'
+  api: 'https://consulta-udg-server.herokuapp.com'
+  // api: 'localhost:3105'
 };

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from 'app/providers/notifications';
+import { ApiProvider } from '../../../providers/api';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,25 @@ import { NotificationsService } from 'app/providers/notifications';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private notif: NotificationsService) { }
+  serverDate: Date;
+  clientDate: Date;
+  loading: boolean = true;
 
-  ngOnInit(): void {
-    this.notif.pop('success', '¡Bienvenido(a)!')
+  constructor(
+    private notif: NotificationsService,
+    private apiProvider: ApiProvider
+  ) { }
+
+  async ngOnInit(): Promise<any> {
+    this.notif.pop('success', '¡Bienvenido(a)!');
+    const request = await this.apiProvider.get({
+      url: '/',
+      auth: false
+    });
+    this.serverDate = request;
+    this.clientDate = new Date();
+
+    this.loading = false;
   }
 
 }

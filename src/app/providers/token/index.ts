@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../local-storage';
 import { Token } from './interfaces';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TokenService {
 
   private _token: Token = null;

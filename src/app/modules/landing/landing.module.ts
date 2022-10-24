@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 
 
@@ -9,7 +10,8 @@ import { HomeComponent } from './home/home.component';
     HomeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PipesModule
   ]
 })
 export class LandingModule { }

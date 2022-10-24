@@ -9,7 +9,9 @@ import { HttpDefaultOptions, HttpGetOptions, HttpPostOptions, HttpPutOptions, Ht
 import { NotificationsService } from '../notifications';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiProvider {
 
   private _baseUrl: string;
