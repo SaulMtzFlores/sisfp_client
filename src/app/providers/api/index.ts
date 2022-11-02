@@ -168,6 +168,7 @@ export class ApiProvider {
     } else if (error.status === 505){
       err.description = `505. Error del servidor ${err.message}`
     }
+    this.notif.pop('error', err.message);
     return throwError(err);
   }
 }

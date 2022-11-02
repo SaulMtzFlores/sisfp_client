@@ -1,1 +1,22 @@
-<p>sign-up works!</p>
+<div>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label>
+        Nombre completo:
+      </label>
+      <input class="form-control w-50 mb-4" formControlName="name">
+      <label>
+        Correo electrónico:
+      </label>
+      <input class="form-control w-50 mb-4" formControlName="email">
+      <label>
+        Contraseña:
+      </label>
+      <input class="form-control w-50 mb-4" type="password" formControlName="password">
+    </div>
+    <button class="btn btn-primary" submit (click)="register()">
+      Registrarme
+    </button>
+</form>
+</div>
+

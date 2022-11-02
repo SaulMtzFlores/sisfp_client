@@ -1,0 +1,25 @@
+<div>
+  <h2>Verificación de cuenta</h2>
+  <p>
+    Se ha enviado un código de verificación a tu correo electrónico.
+    Por favor revise en su bandeja de entrada, y en los apartados de
+    SPAM y correos no deseados.
+  </p>
+
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label>
+        Correo electrónico:
+      </label>
+      <input class="form-control w-50 mb-4" formControlName="email">
+      <label>
+        Código de verificación:
+      </label>
+      <input class="form-control w-50 mb-4" formControlName="code">
+    </div>
+    <button class="btn btn-primary" submit (click)="validate()">
+      Validar mi cuenta
+    </button>
+</form>
+
+</div>

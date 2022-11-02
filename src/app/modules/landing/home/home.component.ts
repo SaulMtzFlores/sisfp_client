@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<any> {
-    this.notif.pop('success', '¡Bienvenido(a)!');
     const request = await this.apiProvider.get({
       url: '/',
       auth: false

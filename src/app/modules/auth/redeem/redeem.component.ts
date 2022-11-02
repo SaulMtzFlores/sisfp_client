@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
 import { ApiProvider } from 'app/providers/api';
 import { NotificationsService } from 'app/providers/notifications';
 import { TokenService } from 'app/providers/token';
 
-
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  selector: 'app-redeem',
+  templateUrl: './redeem.component.html',
+  styleUrls: ['./redeem.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class RedeemComponent implements OnInit {
 
   form: FormGroup;
   constructor(
@@ -24,26 +23,25 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       email: new FormControl(null),
-      password: new FormControl(null),
+      code: new FormControl(null)
     })
   }
 
-  async login(){
+  async validate(){
     try {
       const data = this.form.value;
       const response = await this.apiProvider.post({
-        url: `/auth/login`,
+        url: `/auth/redeem`,
         data,
         auth: false
       });
-    console.log(response);
-    if(response.token){
-      this.tokenService.token = response.token;
-      this.notif.pop('success', '¡Bienvenido(a)!');
-      this.router.navigate(['/udg/home'])
-    }
+      if(response.success){
+        this.notif.pop('success', 'Tu cuenta ha sido activada exitosamente.');
+        this.router.navigate([`/auth/login`]);
+      }
     } catch (error) {
-      console.log(error);
+
     }
   }
+
 }

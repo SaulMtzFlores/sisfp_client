@@ -1,4 +1,25 @@
-<p>sign-in works!</p>
-<button class="btn btn-primary" (click)="login()">
-  Iniciar sesión
-</button>
+<div>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label>
+        Correo electrónico:
+      </label>
+      <input class="form-control w-50 mb-4" formControlName="email">
+      <label>
+        Contraseña:
+      </label>
+      <input class="form-control w-50 mb-4" type="password" formControlName="password">
+    </div>
+    <button class="btn btn-primary" submit (click)="login()">
+      Iniciar sesión
+    </button>
+    <p class="mt-16">
+      ¿Has olvidado tu contraseña?
+      <a href="/auth/recover">
+        Has click aquí
+      </a>
+    </p>
+
+</form>
+</div>
+
