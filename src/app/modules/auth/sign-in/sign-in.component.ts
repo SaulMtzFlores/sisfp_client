@@ -39,6 +39,7 @@ export class SignInComponent implements OnInit {
     console.log(response);
     if(response.token){
       this.tokenService.token = response.token;
+      this.apiProvider.setToken(response.token);
       this.notif.pop('success', '¡Bienvenido(a)!');
       this.router.navigate(['/udg/home'])
     }

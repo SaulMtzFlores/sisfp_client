@@ -7,7 +7,7 @@ import { throwError, firstValueFrom, Observable } from 'rxjs';
 import { map, catchError, first, retry } from 'rxjs/operators';
 import { HttpDefaultOptions, HttpGetOptions, HttpPostOptions, HttpPutOptions, HttpRequestOptions } from './interfaces';
 import { NotificationsService } from '../notifications';
-
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class ApiProvider {
     let headers = (options.auth) ?
     new HttpHeaders({
       'Accept': 'application/json',
-      'Authorization': this.token
+      'Authorization': this.tokenService.token as any
     })
     :
     new HttpHeaders({
@@ -65,7 +65,7 @@ export class ApiProvider {
   }
 
   public get(options: HttpGetOptions) : any {
-    if (options.auth && !this.token){
+    if (options.auth && !this.tokenService.tokenExists()){
       return firstValueFrom(
         new Observable((observer) => {
           observer.error(null);
@@ -99,7 +99,7 @@ export class ApiProvider {
   }
 
   public post(options: HttpPostOptions): Promise<any> {
-    if(options.auth && !this.token){
+    if(options.auth && !this.tokenService.tokenExists()){
       return firstValueFrom(new Observable((observer) => {
         observer.error(null);
         observer.complete();
@@ -119,7 +119,7 @@ export class ApiProvider {
   }
 
   public put(options: HttpPutOptions): Promise<any> {
-    if(options.auth && !this.token){
+    if(options.auth && !this.tokenService.tokenExists()){
       return firstValueFrom(new Observable((observer) => {
         observer.error(null);
         observer.complete();
@@ -138,7 +138,7 @@ export class ApiProvider {
   }
 
   public delete(options: HttpDefaultOptions): Promise<any> {
-    if(options.auth && !this.token){
+    if(options.auth && !this.tokenService.tokenExists()){
       return firstValueFrom(new Observable((observer) => {
         observer.error(null);
         observer.complete();

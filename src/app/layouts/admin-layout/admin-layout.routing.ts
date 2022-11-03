@@ -20,6 +20,7 @@ import { CoordinationViewComponent } from 'app/modules/coordinations/coordinatio
 import { CoursesComponent } from 'app/modules/courses/courses/courses.component';
 import { CourseViewComponent } from 'app/modules/courses/course-view/course-view.component';
 import { CourseComponent } from 'app/modules/courses/course/course.component';
+import { Guard } from 'app/guards/guard';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -36,19 +37,23 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: '',
-          component: UsersComponent
+          component: UsersComponent,
+          canActivate: [Guard]
         },
         {
           path: 'add',
-          component: UserComponent
+          component: UserComponent,
+          canActivate: [Guard]
         },
         {
           path: 'see/:id',
-          component: UserViewComponent
+          component: UserViewComponent,
+          canActivate: [Guard]
         },
         {
           path: 'edit/:id',
-          component: UserComponent
+          component: UserComponent,
+          canActivate: [Guard]
         }
       ]
     },
@@ -58,11 +63,13 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: 'coordination/:id',
-          component: CoordinationPostsComponent
+          component: CoordinationPostsComponent,
+          canActivate: [Guard]
         },
         {
           path: 'course/:id',
-          component: CoursePostsComponent
+          component: CoursePostsComponent,
+          canActivate: [Guard]
         },
         { path: '**', pathMatch: 'full', redirectTo:'home'}
       ]
@@ -73,15 +80,18 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: '',
-          component: CoordinationsComponent
+          component: CoordinationsComponent,
+          canActivate: [Guard]
         },
         {
           path: 'see/:id',
-          component: CoordinationViewComponent
+          component: CoordinationViewComponent,
+          canActivate: [Guard]
         },
         {
           path: 'edit/:id',
-          component: CoordinationComponent
+          component: CoordinationComponent,
+          canActivate: [Guard]
         },
         { path: '**', pathMatch: 'full', redirectTo:'coordinations'}
       ]
@@ -92,19 +102,23 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: '',
-          component: CoursesComponent
+          component: CoursesComponent,
+          canActivate: [Guard]
         },
         {
           path: 'see/:id',
-          component: CourseViewComponent
+          component: CourseViewComponent,
+          canActivate: [Guard]
         },
         {
           path: 'edit/:id',
-          component: CourseComponent
+          component: CourseComponent,
+          canActivate: [Guard]
         },
         {
           path: 'add',
-          component: CourseComponent
+          component: CourseComponent,
+          canActivate: [Guard]
         },
         { path: '**', pathMatch:'full', redirectTo: 'courses'}
       ]
@@ -115,7 +129,8 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: '',
-          component: HomeComponent
+          component: HomeComponent,
+          canActivate: [Guard]
         }
       ]
     },
