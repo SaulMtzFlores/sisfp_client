@@ -52,13 +52,18 @@ export class RecoverComponent implements OnInit {
   async redeem(){
     try {
       const data = this.form.value;
+      console.log(data);
+      for (const key of Object.keys(data)) {
+        console.log(key, data[key]);
+    }
       const response = await this.apiProvider.post({
         url: `/auth/redeem`,
         data,
         auth: false
       });
       if(response.success){
-        this.notif.pop('success', 'Cuenta validada exitosamente.');
+        this.notif.pop('success', 'Cuenta validada exitosamente. Ahora puedes iniciar sesión');
+        this.router.navigate(['/auth/login']);
       }
     } catch (error) {
       console.log(error)
