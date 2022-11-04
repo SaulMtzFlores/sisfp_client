@@ -21,6 +21,8 @@ import { CoursesComponent } from 'app/modules/courses/courses/courses.component'
 import { CourseViewComponent } from 'app/modules/courses/course-view/course-view.component';
 import { CourseComponent } from 'app/modules/courses/course/course.component';
 import { Guard } from 'app/guards/guard';
+import { CoordinationPostsViewComponent } from 'app/modules/posts/coordination-posts-view/coordination-posts-view.component';
+import { CoursePostsViewComponent } from 'app/modules/posts/course-posts-view/course-posts-view.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -63,11 +65,21 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         {
           path: 'coordination/:id',
-          component: CoordinationPostsComponent,
+          component: CoordinationPostsViewComponent,
           canActivate: [Guard]
         },
         {
           path: 'course/:id',
+          component: CoursePostsViewComponent,
+          canActivate: [Guard]
+        },
+        {
+          path: 'coordination/new',
+          component: CoordinationPostsComponent,
+          canActivate: [Guard]
+        },
+        {
+          path: 'course/new',
           component: CoursePostsComponent,
           canActivate: [Guard]
         },

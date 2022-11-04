@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PostViewComponent } from './post-view/post-view.component';
 import { CoordinationPostsComponent } from './coordination-posts/coordination-posts.component';
 import { CoursePostsComponent } from './course-posts/course-posts.component';
+import { CoordinationPostsViewComponent } from './coordination-posts-view/coordination-posts-view.component';
+import { CoursePostsViewComponent } from './course-posts-view/course-posts-view.component';
 
 
 
 @NgModule({
   declarations: [
-    PostViewComponent,
     CoordinationPostsComponent,
-    CoursePostsComponent
+    CoursePostsComponent,
+    CoordinationPostsViewComponent,
+    CoursePostsViewComponent
   ],
   imports: [
     CommonModule
