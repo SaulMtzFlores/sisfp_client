@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { UserComponent } from '../../pages/user/user.component';
 import { UsersComponent } from 'app/modules/users/users/users.component';
 import { UserViewComponent } from 'app/modules/users/user-view/user-view.component';
 import { HomeComponent } from 'app/modules/landing/home/home.component';
@@ -16,6 +15,7 @@ import { CoordinationPostComponent } from 'app/modules/coordination-posts/coordi
 import { CoursePostsComponent } from 'app/modules/courses-posts/course-posts/course-posts.component';
 import { CoursePostViewComponent } from 'app/modules/courses-posts/course-post-view/course-post-view.component';
 import { CoursePostComponent } from 'app/modules/courses-posts/course-post/course-post.component';
+import { UserComponent } from 'app/modules/users/user/user.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
