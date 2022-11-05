@@ -12,8 +12,4 @@ export class CoordinationsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  gotoCoord(route: string){
-    this.router.navigate([`/udg/posts/coordination/${route}`]);
-  }
 }

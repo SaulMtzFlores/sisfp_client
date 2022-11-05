@@ -13,8 +13,4 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  gotoCourse(route: string){
-    this.router.navigate([`/udg/posts/course/${route}`])
-  }
-
 }
