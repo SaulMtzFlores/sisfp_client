@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CenterComponent } from './center/center.component';
 import { CentersComponent } from './centers/centers.component';
 import { CenterViewComponent } from './center-view/center-view.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,8 @@ import { CenterViewComponent } from './center-view/center-view.component';
     CenterViewComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class CentersModule { }
