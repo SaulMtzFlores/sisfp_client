@@ -1,6 +1,8 @@
 <div>
   <section>
-    <button class="btn btn-info" [routerLink]="['/udg/centers']" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/edit/' + modelId ]" routerLinkActive="router-link-active">Editar</button>
+
   </section>
   <hr>
   <section *ngIf="!loading">

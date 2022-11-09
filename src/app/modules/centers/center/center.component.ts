@@ -13,12 +13,14 @@ import { Subscription } from 'rxjs';
 })
 export class CenterComponent implements OnInit {
 
+  resourceName = 'centers';
+
   edition: boolean;
   loading:boolean = false;
   saving: boolean = false;
   deleting: boolean = false;
 
-  centerId: any;
+  modelId: any;
 
   listenerParams: Subscription;
 
@@ -43,7 +45,7 @@ export class CenterComponent implements OnInit {
       await new Promise((resolve) => {
         this.listenerParams = this.activatedRoute.params.subscribe((params) => {
           if(params.id){
-            this.centerId = params.id;
+            this.modelId = params.id;
             this.edition = !!params.id
           }
           return resolve(true);
@@ -51,7 +53,7 @@ export class CenterComponent implements OnInit {
       });
 
       this.model = (this.edition) ? await this.loadModel() : {};
-      this.form = this.buildCenter();
+      this.form = this.buildForm();
 
       this.loading = false;
       this.detector.detectChanges();
@@ -64,18 +66,18 @@ export class CenterComponent implements OnInit {
   private async loadModel():Promise<any>{
     try {
        const r = await this.apiProvider.get({
-        url: `/centers/${this.centerId}`,
+        url: `/${this.resourceName}/${this.modelId}`,
         auth: true
        });
        return r;
     } catch (error) {
       console.log(error);
       this.notif.pop('error', 'No se ha encontrado el centro universitario');
-      this.router.navigate([`/udg/centers`]);
+      this.router.navigate([`/udg/${this.resourceName}`]);
     }
   }
 
-  buildCenter():FormGroup{
+  buildForm():FormGroup{
     const form: FormGroup = new FormGroup({
       name: new FormControl(this.model?.name || null, Validators.required),
       acronym: new FormControl(this.model?.acronym || null, Validators.required),
@@ -92,20 +94,20 @@ export class CenterComponent implements OnInit {
 
       if(this.edition){
         await this.apiProvider.put({
-          url: `/centers/${this.centerId}`,
+          url: `/${this.resourceName}/${this.modelId}`,
           data,
           auth: true
         });
         this.notif.pop('success', 'Centro universitario actualizado.');
-        this.router.navigate([`/udg/centers/see/${this.centerId}`])
+        this.router.navigate([`/udg/${this.resourceName}/see/${this.modelId}`])
       }else{
         const r = await this.apiProvider.post({
-          url: `/centers`,
+          url: `/${this.resourceName}`,
           data,
           auth: true
         });
         this.notif.pop('success', 'Centro universitario creado.');
-        this.router.navigate([`/udg/centers/see/${r._id}`]);
+        this.router.navigate([`/udg/${this.resourceName}/see/${r._id}`]);
       }
     } catch (error) {
       console.log(error);
@@ -118,12 +120,12 @@ export class CenterComponent implements OnInit {
     }
 
     await this.apiProvider.delete({
-      url: `/centers/${this.centerId}`,
+      url: `/${this.resourceName}/${this.modelId}`,
       auth: true
     });
 
     this.notif.pop('success', 'Centro universitario eliminado.');
-    this.router.navigate([`/udg/centers`]);
+    this.router.navigate([`/udg/${this.resourceName}`]);
   }
 
   setModelActive(value:boolean){

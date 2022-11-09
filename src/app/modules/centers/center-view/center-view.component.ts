@@ -12,11 +12,13 @@ import { Subscription } from 'rxjs';
 })
 export class CenterViewComponent implements OnInit, OnDestroy {
 
+  resourceName = 'centers';
+
   loading: boolean = false;
 
   listenerParams: Subscription;
 
-  centerId: any
+  modelId: any
 
   model: any;
 
@@ -34,7 +36,7 @@ export class CenterViewComponent implements OnInit, OnDestroy {
       await new Promise((resolve) => {
         this.listenerParams = this.activatedRoute.params.subscribe((params) => {
           if(params.id){
-            this.centerId = params.id;
+            this.modelId = params.id;
           }
           return resolve(true)
         })
@@ -55,16 +57,15 @@ export class CenterViewComponent implements OnInit, OnDestroy {
 
   async loadModel(): Promise<any>{
     try {
-      const center = await this.apiProvider.get({
-        url: `/centers/${this.centerId}`,
+      const model = await this.apiProvider.get({
+        url: `/${this.resourceName}/${this.modelId}`,
         auth: true
       });
-      console.log(center);
-      return center;
+      return model;
     } catch (error) {
       console.log(error);
       this.notif.pop('error', 'Lo sentimos, el recurso solicitado no existe');
-      this.router.navigate([`/udg/centers`]);
+      this.router.navigate([`/udg/${this.resourceName}`]);
     }
   }
 

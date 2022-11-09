@@ -13,7 +13,7 @@ import { NotificationsService } from 'app/providers/notifications';
 export class CentersComponent implements OnInit {
 
   resourceName = 'centers';
-  centers:any = []
+  models:any = []
   form: FormGroup;
 
   paginationPage: number = 1;
@@ -34,7 +34,6 @@ export class CentersComponent implements OnInit {
         search: new FormControl(null),
       });
       await this.loadModel();
-      console.log(this.centers);
       this.loading = false;
     } catch (error) {
       console.log(error);
@@ -60,11 +59,11 @@ export class CentersComponent implements OnInit {
       }).toString();
 
       const req = await this.apiProvider.get({
-        url: `/centers?${queryParamsString}`,
+        url: `/${this.resourceName}?${queryParamsString}`,
         params,
         auth: true,
       });
-      this.centers = req.data;
+      this.models = req.data;
       this.loading = false;
     } catch (error) {
       console.log(error);

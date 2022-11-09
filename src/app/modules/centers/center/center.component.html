@@ -1,7 +1,7 @@
 <div >
   <!-- Options section -->
   <section class="text-left">
-    <button class="btn btn-info" [routerLink]="['/udg/centers']" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
     <button class="btn btn-danger" (click)="delete()" *ngIf="!loading && edition">Eliminar</button>
   </section>
   <hr>
