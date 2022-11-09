@@ -4,6 +4,7 @@ import { CenterComponent } from './center/center.component';
 import { CentersComponent } from './centers/centers.component';
 import { CenterViewComponent } from './center-view/center-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class CentersModule { }

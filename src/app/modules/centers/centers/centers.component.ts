@@ -19,7 +19,7 @@ export class CentersComponent implements OnInit {
   paginationPage: number = 1;
   paginationPerPage: number = 5;
 
-  loading: boolean = false;;
+  loading: boolean = false;
 
   constructor(
     private apiProvider: ApiProvider,

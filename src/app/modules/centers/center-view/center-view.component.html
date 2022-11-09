@@ -1,1 +1,14 @@
-<p>center-view works!</p>
+<div>
+  <section>
+    <button class="btn btn-info" [routerLink]="['/udg/centers']" routerLinkActive="router-link-active">Volver</button>
+  </section>
+  <hr>
+  <section *ngIf="!loading">
+    <div>
+      <h1>{{model.name}}</h1>
+      <h3>Acrónimo: {{model.acronym}}</h3>
+      <h4 *ngIf="model.active">Estado del centro universitario: <b class="active">ACTIVO</b></h4>
+      <h4 *ngIf="!model.active">Estado del centro universitario: <b class="inactive">INACTIVO</b></h4>
+    </div>
+  </section>
+</div>

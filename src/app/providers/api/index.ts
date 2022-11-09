@@ -119,6 +119,7 @@ export class ApiProvider {
   }
 
   public put(options: HttpPutOptions): Promise<any> {
+
     if(options.auth && !this.tokenService.tokenExists()){
       return firstValueFrom(new Observable((observer) => {
         observer.error(null);
@@ -130,7 +131,7 @@ export class ApiProvider {
         requestOptions.responseType = 'multipart/form-data';
       }
       const obs = this.http
-        .post(this._baseUrl + options.url, options.data, this.getRequestOptions(requestOptions))
+        .put(this._baseUrl + options.url, options.data, this.getRequestOptions(requestOptions))
         .pipe(first())
         .pipe(catchError(this.catchResponseError))
       return firstValueFrom(obs);
@@ -145,7 +146,7 @@ export class ApiProvider {
       }));
     } else {
       const obs = this.http
-        .post(this._baseUrl + options.url, this.getRequestOptions({auth: options.auth}))
+        .delete(this._baseUrl + options.url, this.getRequestOptions({auth: options.auth}))
         .pipe(first())
         .pipe(map(res => res))
         .pipe(catchError(this.catchResponseError));
@@ -155,7 +156,7 @@ export class ApiProvider {
   }
 
   private catchResponseError(error: HttpErrorResponse){
-    console.log('API ERROR');
+    console.log('API ERROR', error);
     const err = { code: error.status, message: error.error.message, description: '', development: (error.error as any)};
 
     if(error.status === 400){
