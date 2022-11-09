@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SubjectComponent } from './subject/subject.component';
 import { SubjectViewComponent } from './subject-view/subject-view.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -13,7 +15,9 @@ import { SubjectsComponent } from './subjects/subjects.component';
     SubjectsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class SubjectModule { }

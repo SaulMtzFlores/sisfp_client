@@ -7,7 +7,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'coordinations', title: 'Coordinaciones', icon:'nc-paper', class: '' },
     { path: 'courses', title: 'Cursos', icon: 'nc-book-bookmark', class:''},
     { path: 'centers', title: 'Centros', icon: 'nc-bank', class: '' },
-    { path: 'degrees', title: 'Carreras', icon: 'nc-touch-id', class: '' },
+    { path: 'degrees', title: 'Licenciaturas', icon: 'nc-touch-id', class: '' },
     { path: 'subjects', title: 'Materias', icon: 'nc-app', class: '' },
 ];
 

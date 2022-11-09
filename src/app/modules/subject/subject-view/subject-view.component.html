@@ -1,1 +1,16 @@
-<p>subject-view works!</p>
+<div>
+  <section>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/edit/' + modelId ]" routerLinkActive="router-link-active">Editar</button>
+
+  </section>
+  <hr>
+  <section *ngIf="!loading">
+    <div>
+      <h1>{{model.name}}</h1>
+      <h3>CVE: {{model.cve}}</h3>
+      <h4 *ngIf="model.active">Estado de la materia: <b class="active">ACTIVO</b></h4>
+      <h4 *ngIf="!model.active">Estado de la materia: <b class="inactive">INACTIVO</b></h4>
+    </div>
+  </section>
+</div>

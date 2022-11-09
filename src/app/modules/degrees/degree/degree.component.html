@@ -1,1 +1,27 @@
-<p>degree works!</p>
+<div >
+  <!-- Options section -->
+  <section class="text-left">
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-danger" (click)="delete()" *ngIf="!loading && edition">Eliminar</button>
+  </section>
+  <hr>
+
+  <section *ngIf="!loading" class="text-left">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label>Nombre de la licenciatura:</label>
+        <input class="form-control w-50 mb-4" formControlName="name">
+
+        <label>Acrónimo:</label>
+        <input class="form-control w-50 mb-4" formControlName="acronym">
+
+        <label>Estado: </label>
+        <select class="form-select" (change)="setModelActive($event.target.value)">
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+        </select>
+      </div>
+      <button class="btn btn-success" submit (click)="save()">Guardar</button>
+    </form>
+  </section>
+</div>
