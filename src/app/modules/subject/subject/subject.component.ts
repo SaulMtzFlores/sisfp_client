@@ -27,6 +27,8 @@ export class SubjectComponent implements OnInit {
 
   form: FormGroup;
 
+  centers:any
+
   constructor(
     private notif: NotificationsService,
     private router: Router,
@@ -50,7 +52,7 @@ export class SubjectComponent implements OnInit {
 
       this.model = (this.edition) ? await this.loadModel() : {};
       this.form = this.buildForm();
-
+      await this.loadResources();
       this.loading = false;
       this.detector.detectChanges();
 
@@ -77,6 +79,7 @@ export class SubjectComponent implements OnInit {
     const form: FormGroup = new FormGroup({
       name: new FormControl(this.model?.name || null, Validators.required),
       cve: new FormControl(this.model?.cve || null, Validators.required),
+      centerId: new FormControl(this.model?.centerId||null, Validators.required),
       active: new FormControl(this.model?.active || true, Validators.nullValidator)
     });
     return form;
@@ -86,7 +89,10 @@ export class SubjectComponent implements OnInit {
     try {
       const data = this.form.value;
 
-      if(data.name === ''){this.notif.pop('error', 'El nombre es obligatorio'); return;}
+      if(!data.name || !data.centerId){
+        this.notif.pop('error', 'Información incorrecta. Favor de revisar el formulario.');
+        return;
+      }
 
       if(this.edition){
         await this.apiProvider.put({
@@ -126,5 +132,25 @@ export class SubjectComponent implements OnInit {
 
   setModelActive(value:boolean){
     this.form.get('active').setValue(value);
+  }
+
+  setCenter(value:any){
+    if(!value){return;}
+    this.form.get('centerId').setValue(value);
+    console.log(this.form.value);
+  }
+
+  async loadResources():Promise<any>{
+    try {
+      const r = await this.apiProvider.get({
+        url: `/centers`,
+        auth:true
+      });
+
+      this.centers = r.data;
+      console.log(this.centers);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

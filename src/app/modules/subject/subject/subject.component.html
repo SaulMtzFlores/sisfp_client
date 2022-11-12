@@ -9,13 +9,19 @@
   <section *ngIf="!loading" class="text-left">
     <form [formGroup]="form">
       <div class="form-group">
-        <label>Nombre de la materia:</label>
+        <h5>Nombre de la materia:</h5>
         <input class="form-control w-50 mb-4" formControlName="name">
 
-        <label>CVE:</label>
+        <h5>CVE:</h5>
         <input class="form-control w-50 mb-4" formControlName="cve">
 
-        <label>Estado: </label>
+        <h5>Centro universitario:</h5>
+        <select class="form-select paddingfix" (change)="setCenter($event.target.value)">
+          <option class="w-50" value="" selected>Seleccionar centro universitario</option>
+          <option class="w-50" [value]="item._id" *ngFor="let item of centers">{{item.name}}</option>
+        </select>
+
+        <h5>Estado: </h5>
         <select class="form-select" (change)="setModelActive($event.target.value)">
           <option value="true">Activo</option>
           <option value="false">Inactivo</option>

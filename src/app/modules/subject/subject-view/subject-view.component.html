@@ -7,6 +7,7 @@
   <hr>
   <section *ngIf="!loading">
     <div>
+      <h4><span class="badge badge-info">{{model.centerId | idField:'/centers':'name' | async}}</span></h4>
       <h1>{{model.name}}</h1>
       <h3>CVE: {{model.cve}}</h3>
       <h4 *ngIf="model.active">Estado de la materia: <b class="active">ACTIVO</b></h4>

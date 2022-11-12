@@ -87,6 +87,7 @@ export class DegreeComponent implements OnInit {
       });
 
       this.centers = r.data;
+      console.log(this.centers);
     } catch (error) {
       console.log(error);
     }
