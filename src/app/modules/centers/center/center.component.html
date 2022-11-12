@@ -9,16 +9,16 @@
   <section *ngIf="!loading" class="text-left">
     <form [formGroup]="form">
       <div class="form-group">
-        <label>Nombre del centro universitario:</label>
+        <h5>Nombre del centro universitario:</h5>
         <input class="form-control w-50 mb-4" formControlName="name">
 
-        <label>Acrónimo:</label>
+        <h5>Acrónimo (opcional):</h5>
         <input class="form-control w-50 mb-4" formControlName="acronym">
 
-        <label>Estado: </label>
-        <select class="form-select" (change)="setModelActive($event.target.value)">
-          <option value="true">Activo</option>
-          <option value="false">Inactivo</option>
+        <h5>Estado: </h5>
+        <select class="form-select paddingfix" (change)="setModelActive($event.target.value)">
+          <option value="true">Centro Activo</option>
+          <option value="false">Centro Inactivo</option>
         </select>
       </div>
       <button class="btn btn-success" submit (click)="save()">Guardar</button>

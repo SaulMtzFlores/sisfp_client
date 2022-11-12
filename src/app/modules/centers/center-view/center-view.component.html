@@ -8,7 +8,8 @@
   <section *ngIf="!loading">
     <div>
       <h1>{{model.name}}</h1>
-      <h3>Acrónimo: {{model.acronym}}</h3>
+      <h3 *ngIf="model.acronym">Acrónimo: {{model.acronym}}</h3>
+      <h3 *ngIf="!model.acronym">Acrónimo no definido para este centro universitario.</h3>
       <h4 *ngIf="model.active">Estado del centro universitario: <b class="active">ACTIVO</b></h4>
       <h4 *ngIf="!model.active">Estado del centro universitario: <b class="inactive">INACTIVO</b></h4>
     </div>

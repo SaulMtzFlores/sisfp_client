@@ -5,6 +5,7 @@ import { CentersComponent } from './centers/centers.component';
 import { CenterViewComponent } from './center-view/center-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 
 
@@ -17,7 +18,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    PipesModule
   ]
 })
 export class CentersModule { }
