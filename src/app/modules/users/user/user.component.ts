@@ -2,7 +2,9 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
+import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
+import { TokenService } from 'app/providers/token';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,12 +32,16 @@ export class UserComponent implements OnInit {
   centers:any;
   roles:any;
 
+  hideRestrictedEdits:boolean = false;
+
   constructor(
     private notif: NotificationsService,
     private router: Router,
     private apiProvider: ApiProvider,
     private activatedRoute: ActivatedRoute,
-    private detector: ChangeDetectorRef
+    private detector: ChangeDetectorRef,
+    private defaultLoader: DefaultLoaderService,
+    private tokenService: TokenService
   ) { }
 
   async ngOnInit(): Promise<any> {
@@ -53,6 +59,7 @@ export class UserComponent implements OnInit {
 
       this.model = (this.edition) ? await this.loadModel() : {};
       this.form = this.buildForm();
+      await this.loadUser();
       await this.loadResources();
       this.loading = false;
       this.detector.detectChanges();
@@ -73,6 +80,21 @@ export class UserComponent implements OnInit {
       console.log(error);
       this.notif.pop('error', 'No se ha encontrado la materia');
       this.router.navigate([`/udg/${this.resourceName}`]);
+    }
+  }
+
+  private async loadUser():Promise<any>{
+    try {
+      console.log(this.tokenService.token);
+      const r = await this.apiProvider.get({
+        url: `/users/${this.tokenService.userId()}`,
+        auth: true
+      });
+      if(r.roleId === this.defaultLoader.idp('studentRole')){
+        this.hideRestrictedEdits = true;
+       }
+    } catch (error) {
+      console.log(error);
     }
   }
 

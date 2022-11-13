@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
+import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
+import { TokenService } from 'app/providers/token';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,13 +23,16 @@ export class SubjectViewComponent implements OnInit {
 
   model: any;
 
+  hideRestrictedEdits:boolean = false;
 
   constructor(
     private apiProvider: ApiProvider,
     private router: Router,
     private notif: NotificationsService,
     private activatedRoute: ActivatedRoute,
-    private detector: ChangeDetectorRef
+    private detector: ChangeDetectorRef,
+    private defaultLoader: DefaultLoaderService,
+    private tokenService: TokenService
   ) { }
 
   async ngOnInit(): Promise<any> {
@@ -43,6 +48,7 @@ export class SubjectViewComponent implements OnInit {
       });
 
       this.model = await this.loadModel();
+      await this.loadUser();
 
       this.loading = false;
       this.detector.detectChanges();
@@ -66,6 +72,21 @@ export class SubjectViewComponent implements OnInit {
       console.log(error);
       this.notif.pop('error', 'Lo sentimos, el recurso solicitado no existe');
       this.router.navigate([`/udg/${this.resourceName}`]);
+    }
+  }
+
+  private async loadUser():Promise<any>{
+    try {
+      console.log(this.tokenService.token);
+      const r = await this.apiProvider.get({
+        url: `/users/${this.tokenService.userId()}`,
+        auth: true
+      });
+      if(r.roleId === this.defaultLoader.idp('studentRole')){
+        this.hideRestrictedEdits = true;
+       }
+    } catch (error) {
+      console.log(error);
     }
   }
 

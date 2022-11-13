@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../local-storage';
 import { Token } from './interfaces';
+import jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class TokenService {
@@ -28,6 +29,16 @@ export class TokenService {
   public tokenExists(): boolean {
     this._token = this.localStorageService.get('token');
     return !!this._token;
+  }
+
+  public userId():any {
+    const token = this.localStorageService.get('token');
+    if(token){
+      const userId:any = jwtDecode(token);
+      return userId._id;
+    }else{
+      return ''
+    }
   }
 
 }

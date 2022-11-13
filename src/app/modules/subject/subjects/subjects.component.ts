@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
+import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
+import { TokenService } from 'app/providers/token';
 
 @Component({
   selector: 'subjects',
@@ -20,11 +22,15 @@ export class SubjectsComponent implements OnInit {
   paginationPerPage: number = 5;
 
   loading: boolean = false;
+  hideRestrictedEdits:boolean = false;
+
 
   constructor(
     private apiProvider: ApiProvider,
     private router: Router,
-    private notif: NotificationsService
+    private notif: NotificationsService,
+    private defaultLoader: DefaultLoaderService,
+    private tokenService: TokenService
   ) { }
 
   async ngOnInit(): Promise<any> {
@@ -34,6 +40,7 @@ export class SubjectsComponent implements OnInit {
         search: new FormControl(null),
       });
       await this.loadModel();
+      await this.loadUser();
       this.loading = false;
     } catch (error) {
       console.log(error);
@@ -65,6 +72,21 @@ export class SubjectsComponent implements OnInit {
       });
       this.models = req.data;
       this.loading = false;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private async loadUser():Promise<any>{
+    try {
+      console.log(this.tokenService.token);
+      const r = await this.apiProvider.get({
+        url: `/users/${this.tokenService.userId()}`,
+        auth: true
+      });
+      if(r.roleId === this.defaultLoader.idp('studentRole')){
+        this.hideRestrictedEdits = true;
+       }
     } catch (error) {
       console.log(error);
     }

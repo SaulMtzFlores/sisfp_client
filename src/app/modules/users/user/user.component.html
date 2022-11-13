@@ -18,11 +18,13 @@
         <h5>Contraseña:</h5>
         <input class="form-control w-50 mb-4" type="password" formControlName="password">
 
-        <h5>Rol asignado:</h5>
-        <select class="form-select paddingfix" (change)="setRole($event.target.value)">
-          <option class="w-50" value="" selected>Seleccionar rol</option>
-          <option class="w-50" [value]="item._id" *ngFor="let item of roles">{{item.name}}</option>
-        </select>
+        <div *ngIf="!hideRestrictedEdits">
+          <h5>Rol asignado:</h5>
+          <select class="form-select paddingfix" (change)="setRole($event.target.value)">
+            <option class="w-50" value="" selected>Seleccionar rol</option>
+            <option class="w-50" [value]="item._id" *ngFor="let item of roles">{{item.name}}</option>
+          </select>
+        </div>
 
         <h5>Centro universitario:</h5>
         <select class="form-select paddingfix" (change)="setCenter($event.target.value)">
