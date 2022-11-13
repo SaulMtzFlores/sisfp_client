@@ -23,7 +23,7 @@ export class CenterViewComponent implements OnInit, OnDestroy {
   modelId: any
 
   model: any;
-  hideRestrictedEdits:boolean = false;
+  allowEdit:boolean = false;
 
   constructor(
     private apiProvider: ApiProvider,
@@ -83,8 +83,8 @@ export class CenterViewComponent implements OnInit, OnDestroy {
         url: `/users/${this.tokenService.userId()}`,
         auth: true
       });
-      if(r.roleId === this.defaultLoader.idp('studentRole')){
-        this.hideRestrictedEdits = true;
+      if(r.roleId !== this.defaultLoader.idp('studentRole')){
+        this.allowEdit = true;
        }
     } catch (error) {
       console.log(error);

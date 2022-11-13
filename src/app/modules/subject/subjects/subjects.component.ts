@@ -22,7 +22,7 @@ export class SubjectsComponent implements OnInit {
   paginationPerPage: number = 5;
 
   loading: boolean = false;
-  hideRestrictedEdits:boolean = false;
+  allowEdit:boolean = false;
 
 
   constructor(
@@ -84,8 +84,8 @@ export class SubjectsComponent implements OnInit {
         url: `/users/${this.tokenService.userId()}`,
         auth: true
       });
-      if(r.roleId === this.defaultLoader.idp('studentRole')){
-        this.hideRestrictedEdits = true;
+      if(r.roleId !== this.defaultLoader.idp('studentRole')){
+        this.allowEdit = true;
        }
     } catch (error) {
       console.log(error);

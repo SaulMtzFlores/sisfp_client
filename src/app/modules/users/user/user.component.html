@@ -18,7 +18,7 @@
         <h5>Contraseña:</h5>
         <input class="form-control w-50 mb-4" type="password" formControlName="password">
 
-        <div *ngIf="!hideRestrictedEdits">
+        <div *ngIf="allowEdit">
           <h5>Rol asignado:</h5>
           <select class="form-select paddingfix" (change)="setRole($event.target.value)">
             <option class="w-50" value="" selected>Seleccionar rol</option>

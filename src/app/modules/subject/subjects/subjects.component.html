@@ -1,7 +1,7 @@
 <div>
   <!-- Options section -->
   <section>
-    <button *ngIf="!hideRestrictedEdits && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/add']" routerLinkActive="router-link-active" >Crear nuevo</button>
+    <button *ngIf="allowEdit && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/add']" routerLinkActive="router-link-active" >Crear nuevo</button>
     <form [formGroup]="form">
       <div class="input-group w-75">
         <input class="form-control heightAdjust" formControlName="search" placeholder="Buscar materia...">
@@ -32,7 +32,7 @@
           <p *ngIf="model.active">Estatus: <span class="badge badge-success">Activo</span></p>
           <p *ngIf="!model.active">Estatus: <span class="badge badge-secondary">Inactivo</span></p>
           <button class="card-link btn btn-primary" (click)="routerGo(0, model._id)">Ver</button>
-          <button class="card-link btn btn-primary" *ngIf="!hideRestrictedEdits && !loading" (click)="routerGo(1, model._id)">Editar</button>
+          <button class="card-link btn btn-primary" *ngIf="allowEdit && !loading" (click)="routerGo(1, model._id)">Editar</button>
         </div>
       </div>
     </div>

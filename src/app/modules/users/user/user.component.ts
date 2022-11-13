@@ -32,7 +32,7 @@ export class UserComponent implements OnInit {
   centers:any;
   roles:any;
 
-  hideRestrictedEdits:boolean = false;
+  allowEdit:boolean = false;
 
   constructor(
     private notif: NotificationsService,
@@ -90,8 +90,8 @@ export class UserComponent implements OnInit {
         url: `/users/${this.tokenService.userId()}`,
         auth: true
       });
-      if(r.roleId === this.defaultLoader.idp('studentRole')){
-        this.hideRestrictedEdits = true;
+      if(r.roleId !== this.defaultLoader.idp('studentRole')){
+        this.allowEdit = true;
        }
     } catch (error) {
       console.log(error);

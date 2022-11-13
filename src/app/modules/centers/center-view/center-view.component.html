@@ -1,7 +1,7 @@
 <div>
   <section>
     <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
-    <button *ngIf="!hideRestrictedEdits && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/edit/' + modelId ]" routerLinkActive="router-link-active">Editar</button>
+    <button *ngIf="allowEdit && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/edit/' + modelId ]" routerLinkActive="router-link-active">Editar</button>
 
   </section>
   <hr>
