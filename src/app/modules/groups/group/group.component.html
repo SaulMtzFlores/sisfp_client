@@ -1,1 +1,67 @@
-<p>group works!</p>
+<div >
+  <!-- Options section -->
+  <section class="text-left">
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-danger" (click)="delete()" *ngIf="!loading && edition">Eliminar</button>
+  </section>
+  <hr>
+
+  <section *ngIf="!loading" class="text-left">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <h5>Nombre del grupo:</h5>
+        <input class="form-control w-50 mb-4" formControlName="name">
+
+        <div>
+          <h5>Centro Universitario:</h5>
+          <select class="form-select paddingfix" (change)="setCenter($event.target.value)">
+            <option class="w-50" selected>Seleccionar centro</option>
+            <option class="w-50" [value]="item._id" *ngFor="let item of centers">{{item.name}}</option>
+          </select>
+        </div>
+
+        <h5>Tipo de grupo:</h5>
+        <select class="form-select paddingfix" (change)="setSubjectType($event.target.value)">
+          <option class="w-50" selected>Seleccionar tipo de grupo</option>
+          <option class="w-50" value="subject">Materia</option>
+          <option class="w-50" value="degree">Coordinación</option>
+        </select>
+
+        <div *ngIf="isDegree">
+          <h5>Coordinación de la licenciatura:</h5>
+          <select class="form-select paddingfix" (change)="setReference($event.target.value)">
+            <option class="w-50" selected>Seleccionar licenciatura</option>
+            <option class="w-50" [value]="item._id" *ngFor="let item of degrees">{{item.name}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="isSubject">
+          <h5>Profesor de la materia:</h5>
+          <select class="form-select paddingfix" (change)="setReference($event.target.value)">
+            <option class="w-50" selected>Seleccionar materia</option>
+            <option class="w-50" [value]="item._id" *ngFor="let item of subjects">{{item.name}}</option>
+          </select>
+        </div>
+
+        <h5>Acceso a los usuarios: </h5>
+        <select class="form-select paddingfix" (change)="setPassword($event.target.value)">
+          <option class="w-50" selected>Seleccionar tipo de acceso</option>
+          <option value="yes">Contraseña</option>
+          <option value="no">Acceso libre</option>
+        </select>
+
+        <div *ngIf="hasPassword">
+          <h5>Contraseña para ingresar al grupo:</h5>
+          <input class="form-control w-50 mb-4" formControlName="password">
+        </div>
+
+        <h5>Estado: </h5>
+        <select class="form-select paddingfix" (change)="setModelActive($event.target.value)">
+          <option value="active">Grupo Activo</option>
+          <option value="inactive">Grupo Inactivo</option>
+        </select>
+      </div>
+      <button class="btn btn-success" submit (click)="save()">Guardar</button>
+    </form>
+  </section>
+</div>

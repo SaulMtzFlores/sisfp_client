@@ -1,3 +1,74 @@
-<div *ngIf="!loading">
-  <h1>Que los relojes no, dicen b:</h1>
+<div>
+  <!-- Options section -->
+  <section>
+    <form [formGroup]="form">
+      <div class="input-group w-75">
+        <input class="form-control heightAdjust" formControlName="search" placeholder="Buscar grupo...">
+        <button class="btn btn-secondary" (click)="search()">Buscar</button>
+      </div>
+    </form>
+  </section>
+
+  <hr>
+
+  <!-- Pagination Top -->
+  <div class="text-center" *ngIf="models.length!==0">
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Lists section -->
+  <section *ngIf="!loading">
+    <div *ngFor="let model of models">
+      <div class="card">
+        <div class="card-body w-100">
+          <h5 class="card-title"><i *ngIf="model.hasPassword" class="nc-icon nc-key-25" style="color:blue;"></i>&nbsp;{{model.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{model.acronym}}</h6>
+          <h6 class="card-subtitle mb-2">{{model.owner | idField:'/users':'name' | async}}.</h6>
+          <h6 class="card-subtitle mb-2 text-muted" *ngIf="model.degree">Coordinación: {{model.referenceId | idField:'/degrees':'name' | async}}.</h6>
+          <h6 class="card-subtitle mb-2 text-muted" *ngIf="model.subject">Curso: {{model.referenceId | idField:'/subjects':'name' | async}}.</h6>
+          <p *ngIf="model.active">Estatus:
+            <span class="badge badge-success">Activo</span>
+            <span class="badge badge-dark ml-1" *ngIf="model.hasPassword">Privado</span>
+          </p>
+          <p *ngIf="!model.active">Estatus:
+            <span class="badge badge-secondary">Inactivo</span>
+            <span class="badge badge-dark ml-1" *ngIf="model.hasPassword">Privado</span>
+          </p>
+          <button class="card-link btn btn-primary" (click)="routerGo(0, model._id)">Ver</button>
+          <button class="card-link btn btn-primary" *ngIf="allowEdit && !loading" (click)="routerGo(1, model._id)">Editar</button>
+          <button class="card-link btn btn-info">Suscribirme</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination Bottom -->
+  <div class="text-center">
+    <div>Página:</div>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Elements per page -->
+  <div class="w-100 text-center">
+    <div>
+      Registros por página
+      <select class="form-select" (change)="setPaginationAmount($event.target.value)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+      </select>
+    </div>
+  </div>
 </div>
