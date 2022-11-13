@@ -2,7 +2,9 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
+import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
+import { TokenService } from 'app/providers/token';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,11 +38,14 @@ export class CenterComponent implements OnInit {
     private router: Router,
     private apiProvider: ApiProvider,
     private activatedRoute: ActivatedRoute,
-    private detector: ChangeDetectorRef
+    private detector: ChangeDetectorRef,
+    private defaultLoader: DefaultLoaderService,
+    private tokenService: TokenService
   ) { }
 
   async ngOnInit(): Promise<any> {
     try {
+      await this.loadUser();
       this.loading = true;
       await new Promise((resolve) => {
         this.listenerParams = this.activatedRoute.params.subscribe((params) => {
@@ -74,6 +79,22 @@ export class CenterComponent implements OnInit {
       console.log(error);
       this.notif.pop('error', 'No se ha encontrado el centro universitario');
       this.router.navigate([`/udg/${this.resourceName}`]);
+    }
+  }
+
+  private async loadUser():Promise<any>{
+    try {
+      console.log(this.tokenService.token);
+      const r = await this.apiProvider.get({
+        url: `/users/${this.tokenService.userId()}`,
+        auth: true
+      });
+      if(r.roleId === this.defaultLoader.idp('studentRole')){
+        this.notif.pop('warning', 'Lo sentimos, no tienes permisos para acceder a esta ubicación');
+        this.router.navigate([`/udg/${this.resourceName}`]);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
