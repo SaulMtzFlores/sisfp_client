@@ -30,7 +30,9 @@ export class Guard implements CanActivate {
           return true;
         } else if (!this.noAuthRoutes.find(url => url === stateUrl) && this.tokenProvider.tokenExists()){ // Ruta auth, hay token, verifica token
           if(!await this.validateToken(stateUrl.split('/')[1])){
-            this.router.navigate(['/udg/home']);
+          this.tokenProvider.token = null;
+          this.apiProvider.setToken(null);
+            this.router.navigate(['/auth/sign-in']);
             return false;
           }
           return true;
