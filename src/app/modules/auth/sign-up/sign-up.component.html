@@ -3,18 +3,25 @@
   <p>Para crear una cuenta nueva, por favor llene el formulario con sus datos.</p>
   <form [formGroup]="form">
     <div class="form-group">
-      <label>
+      <h5>
         Nombre completo:
-      </label>
+      </h5>
       <input class="form-control w-50 mb-4" formControlName="name">
-      <label>
+      <h5>
         Correo electrónico:
-      </label>
+      </h5>
       <input class="form-control w-50 mb-4" formControlName="email">
-      <label>
+      <h5>
         Contraseña:
-      </label>
+      </h5>
       <input class="form-control w-50 mb-4" type="password" formControlName="password">
+
+      <h5>Centro universitario:</h5>
+      <select class="form-select paddingfix" (change)="setCenter($event.target.value)">
+        <option class="w-50" value="" selected>Seleccionar centro universitario</option>
+        <option class="w-50" [value]="item._id" *ngFor="let item of centers">{{item.name}}</option>
+      </select>
+
     </div>
     <button class="btn btn-primary" submit (click)="register()">
       Registrarme

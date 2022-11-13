@@ -14,19 +14,22 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup;
 
+  centers: any;
+
   constructor(
     private router: Router,
     private apiProvider: ApiProvider,
-    private notif: NotificationsService,
-    private tokenService: TokenService
+    private notif: NotificationsService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.form = new FormGroup({
       name: new FormControl(null),
       email: new FormControl(null),
       password: new FormControl(null),
-    })
+      centerId: new FormControl(null),
+    });
+    await this.loadResources();
   }
 
   async register(){
@@ -37,9 +40,26 @@ export class SignUpComponent implements OnInit {
         data,
         auth: false
       });
-      console.log(response);
       this.notif.pop('success', 'Código de verificación enviado.');
       this.router.navigate(['/auth/redeem']);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  setCenter(value:any){
+    if(!value){return;}
+    this.form.get('centerId').setValue(value);
+  }
+
+  async loadResources():Promise<any>{
+    try {
+      const r = await this.apiProvider.get({
+        url: `/centers`,
+        auth:false
+      });
+
+      this.centers = r.data;
     } catch (error) {
       console.log(error);
     }

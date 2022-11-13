@@ -1,1 +1,21 @@
-<p>user-view works!</p>
+<div>
+  <section>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/edit/' + modelId ]" routerLinkActive="router-link-active">Editar</button>
+
+  </section>
+  <hr>
+  <section *ngIf="!loading">
+    <div>
+      <h4><span class="badge badge-info">{{model.centerId | idField:'/centers':'name' | async}}</span></h4>
+      <h1>{{model.name}}</h1>
+      <h3>{{model.email}}</h3>
+      <h3>
+        Rol asignado:
+        {{model.roleId | idField:'/roles':'name' | async}}
+      </h3>
+      <h4 *ngIf="model.active">Estado del usuario: <b class="active">ACTIVO</b></h4>
+      <h4 *ngIf="!model.active">Estado del usuario: <b class="inactive">INACTIVO</b></h4>
+    </div>
+  </section>
+</div>

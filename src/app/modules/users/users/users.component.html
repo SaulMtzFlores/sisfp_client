@@ -1,1 +1,63 @@
-<p>users works!</p>
+<div>
+  <!-- Options section -->
+  <section>
+    <form [formGroup]="form">
+      <div class="input-group w-75">
+        <input class="form-control heightAdjust" formControlName="search" placeholder="Buscar usuario...">
+        <button class="btn btn-secondary" (click)="search()">Buscar</button>
+      </div>
+    </form>
+  </section>
+
+  <hr>
+  <div class="text-center" *ngIf="models.length!==0">
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Lists section -->
+  <section *ngIf="!loading">
+    <div *ngFor="let model of models">
+      <div class="card">
+        <div class="card-body w-100">
+          <h5 class="card-title">{{model.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{model.email}}</h6>
+          <h6 class="card-subtitle mb-2">{{model.roleId | idField:'/roles':'name' | async}}</h6>
+          <p *ngIf="model.active">Estatus: <span class="badge badge-success">Activo</span></p>
+          <p *ngIf="!model.active">Estatus: <span class="badge badge-secondary">Inactivo</span></p>
+          <button class="card-link btn btn-primary" (click)="routerGo(0, model._id)">Ver</button>
+          <button class="card-link btn btn-primary" (click)="routerGo(1, model._id)">Editar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination -->
+  <div class="text-center">
+    <div>Página:</div>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Elements per page -->
+  <div class="w-100 text-center">
+    <div>
+      Registros por página
+      <select class="form-select" (change)="setPaginationAmount($event.target.value)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+      </select>
+    </div>
+  </div>
+</div>

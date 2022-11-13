@@ -13,6 +13,9 @@ import { DegreeComponent } from 'app/modules/degrees/degree/degree.component';
 import { SubjectsComponent } from 'app/modules/subject/subjects/subjects.component';
 import { SubjectViewComponent } from 'app/modules/subject/subject-view/subject-view.component';
 import { SubjectComponent } from 'app/modules/subject/subject/subject.component';
+import { GroupsComponent } from 'app/modules/groups/groups/groups.component';
+import { GroupViewComponent } from 'app/modules/groups/group-view/group-view.component';
+import { GroupComponent } from 'app/modules/groups/group/group.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -20,7 +23,6 @@ export const AdminLayoutRoutes: Routes = [
       loadChildren: () => import('../../modules/users/users.module').then(m => m.UsersModule),
       children: [
         { path: '', component: UsersComponent, canActivate: [Guard] },
-        { path: 'add', component: UserComponent, canActivate: [Guard] },
         { path: 'see/:id', component: UserViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: UserComponent, canActivate: [Guard] }
       ]
@@ -55,6 +57,17 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'see/:id', component: SubjectViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: SubjectComponent, canActivate: [Guard] },
         { path: 'add', component: SubjectComponent, canActivate: [Guard] },
+        { path: '**', pathMatch: 'full', redirectTo: '' }
+      ]
+    },
+    {
+      path: 'groups',
+      loadChildren: () => import('../../modules/groups/groups.module').then(m => m.GroupsModule),
+      children: [
+        { path: '', component: GroupsComponent, canActivate: [Guard] },
+        { path: 'see/:id', component: GroupViewComponent, canActivate: [Guard] },
+        { path: 'edit/:id', component: GroupComponent, canActivate: [Guard] },
+        { path: 'add', component: GroupComponent, canActivate: [Guard] },
         { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },

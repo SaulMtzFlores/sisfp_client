@@ -137,7 +137,6 @@ export class SubjectComponent implements OnInit {
   setCenter(value:any){
     if(!value){return;}
     this.form.get('centerId').setValue(value);
-    console.log(this.form.value);
   }
 
   async loadResources():Promise<any>{
@@ -148,7 +147,6 @@ export class SubjectComponent implements OnInit {
       });
 
       this.centers = r.data;
-      console.log(this.centers);
     } catch (error) {
       console.log(error);
     }

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class SubjectViewComponent implements OnInit {
 
-   resourceName = 'subjects';
+  resourceName = 'subjects';
 
   loading: boolean = false;
 
