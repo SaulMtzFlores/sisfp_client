@@ -161,7 +161,7 @@ export class ApiProvider {
 
     if(error.status === 400){
       err.description = `400. Petición incorrecta al api.`;
-    } else if (error.status === 401){
+    } else if (error.status === 401 || error.status === 0){
       this.tokenService.token = null;
       this.router.navigate(['auth/signin']);
     } else if (error.status === 500){
@@ -169,7 +169,9 @@ export class ApiProvider {
     } else if (error.status === 505){
       err.description = `505. Error del servidor ${err.message}`
     }
-    this.notif.pop('error', err.message);
+    if(err.message){
+      this.notif.pop('error', err.message);
+    }
     return throwError(err);
   }
 }
