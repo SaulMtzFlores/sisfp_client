@@ -12,7 +12,7 @@
       </h4>
       <h4 *ngIf="model.subject"><span class="badge badge-warning">{{model.referenceId | idField:'/subjects':'name' | async}}</span></h4>
       <h1>{{model.name}}</h1>
-      <h3>Creador del grupo: {{model.owner | idField:'/users':'name' | async}}.</h3>
+      <h3>Creador del grupo: {{model.ownerId | idField:'/users':'name' | async}}.</h3>
       <h4 *ngIf="model.active">Estado del grupo: <b class="active">ACTIVA</b></h4>
       <h4 *ngIf="!model.active">Estado del grupo: <b class="inactive">INACTIVA</b></h4>
 

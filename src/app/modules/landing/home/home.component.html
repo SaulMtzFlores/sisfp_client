@@ -29,7 +29,7 @@
         <div class="card-body w-100">
           <h5 class="card-title"><i *ngIf="model.hasPassword" class="nc-icon nc-key-25" style="color:blue;"></i>&nbsp;{{model.name}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{model.acronym}}</h6>
-          <h6 class="card-subtitle mb-2">{{model.owner | idField:'/users':'name' | async}}.</h6>
+          <h6 class="card-subtitle mb-2">{{model.ownerId | idField:'/users':'name' | async}}.</h6>
           <h6 class="card-subtitle mb-2 text-muted" *ngIf="model.degree">Coordinación: {{model.referenceId | idField:'/degrees':'name' | async}}.</h6>
           <h6 class="card-subtitle mb-2 text-muted" *ngIf="model.subject">Curso: {{model.referenceId | idField:'/subjects':'name' | async}}.</h6>
           <p *ngIf="model.active">Estatus:
