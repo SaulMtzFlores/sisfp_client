@@ -145,7 +145,7 @@ export class HomeComponent implements OnInit {
         auth: true
       });
 
-      (s) ? this.notif.pop('success', 'Te has suscrito al grupo exitosamente')
+      (s) ? this.notif.pop('success', 'Te has suscrito al grupo.')
       : this.notif.pop('error', 'Algo salió mal, por favor intentalo nuevamente.')
 
       this.router.navigate([`/udg/${this.resourceName}`]);

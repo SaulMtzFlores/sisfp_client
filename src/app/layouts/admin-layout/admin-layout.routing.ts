@@ -71,9 +71,9 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'see/:id', component: GroupViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: GroupComponent, canActivate: [Guard] },
         { path: 'add', component: GroupComponent, canActivate: [Guard] },
-        { path: 'see/:groupId/posts', component: PostsComponent, canActivate: [Guard] },
-        { path: 'see/:groupId/posts/see/:id', component: PostViewComponent, canActivate: [Guard] },
-        { path: 'see/:groupId/posts/add', component: PostComponent, canActivate: [Guard] },
+        { path: ':groupId/posts', component: PostsComponent, canActivate: [Guard] },
+        { path: ':groupId/posts/see/:id', component: PostViewComponent, canActivate: [Guard] },
+        { path: ':groupId/posts/add', component: PostComponent, canActivate: [Guard] },
         { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },

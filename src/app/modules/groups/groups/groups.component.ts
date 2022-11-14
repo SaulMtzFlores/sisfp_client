@@ -79,7 +79,6 @@ export class GroupsComponent implements OnInit {
 
   private async loadUser():Promise<any>{
     try {
-      console.log(this.tokenService.token);
       const r = await this.apiProvider.get({
         url: `/users/${this.tokenService.userId()}`,
         auth: true
@@ -126,6 +125,10 @@ export class GroupsComponent implements OnInit {
     ]);
   }
 
+  seePosts(_id:string){
+    this.router.navigate([`/udg/groups/${_id}/posts`])
+  }
+
   async unsubscribe(groupId:any):Promise<any>{
     try {
       const s = await this.apiProvider.post({
@@ -134,7 +137,7 @@ export class GroupsComponent implements OnInit {
         auth: true
       });
 
-      (s) ? this.notif.pop('success', 'Te has desuscrito al grupo exitosamente')
+      (s) ? this.notif.pop('success', 'Te has desuscrito del grupo.')
       : this.notif.pop('error', 'Algo salió mal, por favor intentalo nuevamente.')
 
       this.router.navigate([`/udg/home`]);
