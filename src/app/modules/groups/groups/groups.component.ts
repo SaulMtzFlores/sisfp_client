@@ -126,4 +126,21 @@ export class GroupsComponent implements OnInit {
     ]);
   }
 
+  async unsubscribe(groupId:any):Promise<any>{
+    try {
+      const s = await this.apiProvider.post({
+        url: `/subscriptions/unsubscribe`,
+        data: { userId: this.tokenService.userId(), groupId },
+        auth: true
+      });
+
+      (s) ? this.notif.pop('success', 'Te has desuscrito al grupo exitosamente')
+      : this.notif.pop('error', 'Algo salió mal, por favor intentalo nuevamente.')
+
+      this.router.navigate([`/udg/home`]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }

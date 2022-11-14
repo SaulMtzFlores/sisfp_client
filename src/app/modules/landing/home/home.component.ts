@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   resourceName = 'groups';
   models:any = []
   form: FormGroup;
+  subform: FormGroup;
 
   paginationPage: number = 1;
   paginationPerPage: number = 5;
@@ -37,6 +38,9 @@ export class HomeComponent implements OnInit {
       this.loading = true;
       this.form = new FormGroup({
         search: new FormControl(null),
+      });
+      this.subform = new FormGroup({
+        password: new FormControl(null)
       });
       await this.loadModel();
       await this.loadUser();
@@ -60,7 +64,7 @@ export class HomeComponent implements OnInit {
         params.search = searchData.search
       }
 
-      const queryParamsString = new HttpParams                                                                                                     ({
+      const queryParamsString = new HttpParams({
         fromObject: params,
       }).toString();
 
@@ -78,7 +82,6 @@ export class HomeComponent implements OnInit {
 
   private async loadUser():Promise<any>{
     try {
-      console.log(this.tokenService.userId());
       const r = await this.apiProvider.get({
         url: `/users/${this.tokenService.userId()}`,
         auth: true
@@ -123,6 +126,32 @@ export class HomeComponent implements OnInit {
       `/udg/${this.resourceName}/edit/${_id}` :
       `/udg/${this.resourceName}/see/${_id}`
     ]);
+  }
+
+  // TODO brecha de seguridad aquí xd debería hacerse en el server la validación del password
+  async subscription(model:any){
+    try {
+      if(model.hasPassword && model.password !== this.subform.value.password){
+        this.notif.pop('error', 'Código incorrecto.')
+        return;
+      }
+
+      const s = await this.apiProvider.post({
+        url: `/subscriptions`,
+        data: {
+          userId: this.tokenService.userId(),
+          groupId: model._id
+        },
+        auth: true
+      });
+
+      (s) ? this.notif.pop('success', 'Te has suscrito al grupo exitosamente')
+      : this.notif.pop('error', 'Algo salió mal, por favor intentalo nuevamente.')
+
+      this.router.navigate([`/udg/${this.resourceName}`]);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

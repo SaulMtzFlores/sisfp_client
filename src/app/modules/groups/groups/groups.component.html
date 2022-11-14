@@ -25,6 +25,9 @@
 
   <!-- Lists section -->
   <section *ngIf="!loading">
+    <div *ngIf="models.length === 0 && paginationPage===1">
+      <h3>Aún no estás suscrito a ningún grupo.</h3>
+    </div>
     <div *ngFor="let model of models">
       <div class="card">
         <div class="card-body w-100">
@@ -44,6 +47,7 @@
           <button class="card-link btn btn-info">Publicaciones</button>
           <button class="card-link btn btn-primary" *ngIf="allowEdit && !loading" (click)="routerGo(1, model._id)">Editar</button>
           <button class="card-link btn btn-primary" (click)="routerGo(0, model._id)">Info</button>
+          <button class="card-link btn btn-danger" (click)="unsubscribe(model._id)">Desuscribirme</button>
         </div>
       </div>
     </div>
