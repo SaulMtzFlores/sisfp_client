@@ -1,0 +1,27 @@
+<div>
+  <!-- Options section -->
+  <section class="text-left">
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName + '/' + subresourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-danger" (click)="delete()" *ngIf="!loading && edition">Eliminar</button>
+  </section>
+  <hr>
+
+  <section *ngIf="!loading" class="text-left">
+    <form [formGroup]="form">
+      <div class="form-group">
+
+        <h5>Titulo:</h5>
+        <input class="form-control w-50 mb-4" formControlName="name">
+
+        <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png" #drop>
+          <ngx-dropzone-label>Puedes subir únicamente una imagen</ngx-dropzone-label>
+          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+          </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+        <button (click)="upload()">Subir imagen</button>
+
+      </div>
+      <button class="btn btn-success" submit (click)="save()">Guardar</button>
+    </form>
+  </section>
+</div>

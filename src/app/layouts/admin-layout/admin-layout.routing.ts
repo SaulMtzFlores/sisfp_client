@@ -16,6 +16,9 @@ import { SubjectComponent } from 'app/modules/subject/subject/subject.component'
 import { GroupsComponent } from 'app/modules/groups/groups/groups.component';
 import { GroupViewComponent } from 'app/modules/groups/group-view/group-view.component';
 import { GroupComponent } from 'app/modules/groups/group/group.component';
+import { PostsComponent } from 'app/modules/groups/posts/posts.component';
+import { PostComponent } from 'app/modules/groups/post/post.component';
+import { PostViewComponent } from 'app/modules/groups/post-view/post-view.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -68,6 +71,9 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'see/:id', component: GroupViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: GroupComponent, canActivate: [Guard] },
         { path: 'add', component: GroupComponent, canActivate: [Guard] },
+        { path: 'see/:groupId/posts', component: PostsComponent, canActivate: [Guard] },
+        { path: 'see/:groupId/posts/see/:id', component: PostViewComponent, canActivate: [Guard] },
+        { path: 'see/:groupId/posts/add', component: PostComponent, canActivate: [Guard] },
         { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },
