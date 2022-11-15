@@ -1,1 +1,30 @@
-<p>post-view works!</p>
+<div>
+  <section>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName + '/' + groupId + '/' + subresourceName]" routerLinkActive="router-link-active">Volver</button>
+  </section>
+  <hr>
+  <section *ngIf="!loading">
+    <div class="row">
+      <div class="col">
+        <div>
+          <p>{{model.createdAt | esdate }} </p>
+          <h5 class="card-title">{{model.title}}</h5>
+          <p class="text-muted mr-auto">{{model.description}}</p>
+          <img class="imgPreview my-4" [src]="model.media">
+
+          <h5>Autor: {{model.ownerId | idField:'/users':'name' | async}}.</h5>
+          <p *ngIf="model.moment">Notificaciones: <span class="badge badge-success">Activas</span></p>
+          <p *ngIf="!model.moment">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
+        </div>
+      </div>
+      <div class="col">
+        Comentarios
+        <form [formGroup]="form">
+          <div class="form-group">
+            <input class="form-control w-50 mb-4" formControlName="comment" placeholder="Escribe lo que piensas.">
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

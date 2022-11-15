@@ -1,1 +1,76 @@
-<p>posts works!</p>
+<div>
+  <!-- Options section -->
+  <section>
+    <button *ngIf="allowEdit && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/' + groupId + '/posts/add']" routerLinkActive="router-link-active" >Crear nuevo</button>
+    <form [formGroup]="form">
+      <div class="input-group w-75">
+        <input class="form-control heightAdjust" formControlName="search" placeholder="Buscar licenciatura...">
+        <button class="btn btn-secondary" (click)="search()">Buscar</button>
+      </div>
+    </form>
+  </section>
+
+  <hr>
+
+  <!-- Pagination Top -->
+  <div class="text-center" *ngIf="models.length!==0">
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Lists section -->
+  <section *ngIf="!loading">
+    <div *ngFor="let model of models">
+      <div class="card">
+        <div class="card-body w-100">
+          <div class="container">
+            <div class="row justify-content-start">
+              <div class="col-6">
+                <p>{{model.createdAt | esdate }} </p>
+                <h5 class="card-title">{{model.title}}</h5>
+                <p class="text-muted mr-auto">{{model.description}}</p>
+              </div>
+              <div class="col-6">
+                <img class="imgPreview my-4" [src]="model.media">
+              </div>
+            </div>
+          </div>
+
+          <h5>Autor: {{model.ownerId | idField:'/users':'name' | async}}.</h5>
+          <p *ngIf="model.moment">Notificaciones: <span class="badge badge-success">Activas</span></p>
+          <p *ngIf="!model.moment">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
+          <button class="card-link btn btn-primary" (click)="routerGo(model._id)">Ver</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination Bottom -->
+  <div class="text-center">
+    <div>Página:</div>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage-1)" [disabled]="paginationPage==1">
+      <i class="nc-icon nc-minimal-left"></i>
+    </button>
+    <button class="btn btn-info">{{paginationPage}}</button>
+    <button class="btn btn-info" (click)="setPaginationPage(paginationPage+1)" [disabled]="models.length==0">
+      <i class="nc-icon nc-minimal-right"></i>
+    </button>
+  </div>
+
+  <!-- Elements per page -->
+  <div class="w-100 text-center">
+    <div>
+      Registros por página
+      <select class="form-select" (change)="setPaginationAmount($event.target.value)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+      </select>
+    </div>
+  </div>
+</div>
