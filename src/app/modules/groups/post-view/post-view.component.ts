@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
 import { DefaultLoaderService } from 'app/providers/default-loader';
@@ -27,6 +28,9 @@ export class PostViewComponent implements OnInit {
 
   allowEdit:boolean = false;
 
+  comments:any;
+  form: any;
+
   constructor(
     private apiProvider: ApiProvider,
     private router: Router,
@@ -52,6 +56,10 @@ export class PostViewComponent implements OnInit {
 
       this.model = await this.loadModel();
       await this.loadUser();
+      await this.loadComments();
+      this.form = new FormGroup({
+        comment: new FormControl(null)
+      });
 
       this.loading = false;
       this.detector.detectChanges();
@@ -76,7 +84,7 @@ export class PostViewComponent implements OnInit {
 
   private async loadUser():Promise<any>{
     try {
-      console.log(this.tokenService.token);
+
       const r = await this.apiProvider.get({
         url: `/users/${this.tokenService.userId()}`,
         auth: true
@@ -84,6 +92,52 @@ export class PostViewComponent implements OnInit {
       if(r.roleId !== this.defaultLoader.idp('studentRole')){
         this.allowEdit = true;
        }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private async loadComments():Promise<any>{
+    try {
+      const r = await this.apiProvider.get({
+        url: `/posts/${this.modelId}/comments`,
+        auth: true
+      });
+
+      this.comments = r.data;
+
+    } catch (error) {
+
+    }
+  }
+
+  async comment(){
+    try {
+      console.log(this.form.controls.comment.value);
+      if(!this.form.controls.comment.value){
+        this.notif.pop('error', 'Comentario vacío');
+        return;
+      }
+
+      const data = {
+        ownerId: this.tokenService.userId(),
+        postId: this.modelId,
+        comment: this.form.controls.comment.value,
+        createdAt: new Date()
+      }
+
+      const r = await this.apiProvider.post({
+        url: `/posts/${this.modelId}/comments`,
+        auth: true,
+        data
+      });
+
+      if(r){
+        window.location.reload();
+        this.notif.pop('success', 'Comentario añadido');
+      }else{
+        this.notif.pop('error', 'Algo salió mal, por favor intentalo nuevamente.');
+      }
     } catch (error) {
       console.log(error);
     }

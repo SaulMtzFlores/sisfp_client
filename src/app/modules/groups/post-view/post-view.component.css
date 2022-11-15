@@ -5,3 +5,8 @@
 .inactive {
   color:gray
 }
+
+.heightAdjust{
+  height: 45px !important;
+  margin-top: 7px;
+}

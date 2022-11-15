@@ -79,7 +79,7 @@ export class SubjectsComponent implements OnInit {
 
   private async loadUser():Promise<any>{
     try {
-      console.log(this.tokenService.token);
+
       const r = await this.apiProvider.get({
         url: `/users/${this.tokenService.userId()}`,
         auth: true

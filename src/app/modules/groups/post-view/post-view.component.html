@@ -18,12 +18,20 @@
         </div>
       </div>
       <div class="col">
-        Comentarios
         <form [formGroup]="form">
-          <div class="form-group">
-            <input class="form-control w-50 mb-4" formControlName="comment" placeholder="Escribe lo que piensas.">
+          <div class="form-group input-group">
+            <input class="form-control w-50 heightAdjust" formControlName="comment" placeholder="Escribe lo que piensas.">
+            <button class="btn btn-primary" submit (click)="comment()">Comentar</button>
           </div>
         </form>
+        <div>
+          Comentarios:
+          <div class="card px-4 pt-1" *ngFor="let item of comments">
+            <p><span class="badge badge-pill badge-dark py-1 px-2">{{item.ownerId| idField:'/users':'name'|async}}</span> - {{item.createdAt | esdate}}</p>
+            <p>{{item.comment}}</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
