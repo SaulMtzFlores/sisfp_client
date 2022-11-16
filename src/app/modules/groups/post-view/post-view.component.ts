@@ -143,4 +143,16 @@ export class PostViewComponent implements OnInit {
     }
   }
 
+  async deletePost(){
+    const r = await this.apiProvider.delete({
+      url: `/${this.resourceName}/${this.groupId}/${this.subresourceName}/${this.modelId}`,
+      auth: true
+    });
+    if(r){
+      this.notif.pop('success', 'Publicación eliminada.');
+      this.router.navigate([`/udg/${this.resourceName}/${this.groupId}/${this.subresourceName}`]);
+    }else{
+      this.notif.pop('error', 'Algo salió mal, intentalo nuevamente.');
+    }
+  }
 }

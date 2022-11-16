@@ -1,6 +1,7 @@
 <div>
   <section>
     <button class="btn btn-info" [routerLink]="['/udg/' + resourceName + '/' + groupId + '/' + subresourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-danger" *ngIf="allowEdit && !loading" (click)="deletePost()">Eliminar</button>
   </section>
   <hr>
   <section *ngIf="!loading">

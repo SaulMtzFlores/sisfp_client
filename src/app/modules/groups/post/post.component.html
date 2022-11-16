@@ -1,7 +1,7 @@
 <div>
   <!-- Options section -->
   <section class="text-left">
-    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName + '/' + subresourceName]" routerLinkActive="router-link-active">Volver</button>
+    <button class="btn btn-info" [routerLink]="['/udg/' + resourceName + '/' + groupId + '/' + subresourceName]" routerLinkActive="router-link-active">Volver</button>
     <button class="btn btn-danger" (click)="delete()" *ngIf="!loading && edition">Eliminar</button>
   </section>
   <hr>
@@ -11,16 +11,33 @@
       <div class="form-group">
 
         <h5>Titulo:</h5>
-        <input class="form-control w-50 mb-4" formControlName="name">
+        <input class="form-control w-50 mb-4" formControlName="title"/>
 
-        <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png" #drop>
-          <ngx-dropzone-label>Puedes subir únicamente una imagen</ngx-dropzone-label>
-          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
-          </ngx-dropzone-image-preview>
-        </ngx-dropzone>
-        <button (click)="upload()">Subir imagen</button>
+        <h5>Descripción:</h5>
+        <input class="form-control w-50 mb-4" formControlName="description"/>
+
+        <h5>Tipo de publicación:</h5>
+        <select class="form-select paddingfix" (change)="setPostType($event.target.value)">
+          <option class="w-50" selected>Seleccionar tipo de publicación</option>
+          <option class="w-50" value="permanent">Permanente</option>
+          <option class="w-50" value="temp">Temporal</option>
+        </select>
+
+        <div *ngIf="isMoment">
+          <h5>Fecha de finalización de publicación:</h5>
+          <input class="form-control w-50 mb-4" type="date" formControlName="finishAt"/>
+
+          <h5>Fecha de notificación:</h5>
+          <small>Los usuarios recibirán un correo electrónico con un recordatorio a partir de la fecha y hora designada</small>
+          <input class="form-control w-50 mb-4" type="datetime-local" formControlName="notifyAt"/>
+        </div>
 
       </div>
+      <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png" #drop>
+        <ngx-dropzone-label>Puedes subir únicamente una imagen</ngx-dropzone-label>
+        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
       <button class="btn btn-success" submit (click)="save()">Guardar</button>
     </form>
   </section>

@@ -30,7 +30,15 @@ export class PostComponent implements OnInit {
 
   model:any;
 
-  form: FormGroup;
+  isMoment:boolean = false;
+
+  form: FormGroup = new FormGroup({
+    title: new FormControl(null, Validators.nullValidator),
+    description: new FormControl(null, Validators.nullValidator),
+    moment: new FormControl(false, Validators.nullValidator),
+    finishAt: new FormControl(null, Validators.nullValidator),
+    notifyAt: new FormControl(null, Validators.nullValidator),
+  });
 
   centers:any
 
@@ -54,7 +62,7 @@ export class PostComponent implements OnInit {
       this.loading = true;
       await new Promise((resolve) => {
         this.listenerParams = this.activatedRoute.params.subscribe((params) => {
-          if(params.id){
+          if(params.groupId){
             this.groupId = params.groupId;
             this.modelId = params.id;
             this.edition = !!params.id
@@ -64,7 +72,7 @@ export class PostComponent implements OnInit {
       });
 
       this.model = (this.edition) ? await this.loadModel() : {};
-      this.form = this.buildForm();
+      // this.form = this.buildForm();
       // await this.loadResources();
 
       this.loading = false;
@@ -104,28 +112,54 @@ export class PostComponent implements OnInit {
     }
   }
 
-  buildForm():FormGroup{ // TODO
-    const form: FormGroup = new FormGroup({
-      name: new FormControl(this.model?.name || null, Validators.required),
-      cve: new FormControl(this.model?.cve || null, Validators.required),
-      centerId: new FormControl(this.model?.centerId||null, Validators.required),
-      active: new FormControl(this.model?.active || true, Validators.nullValidator)
-    });
-    return form;
-  }
-
   async save(){
     try {
-      const data = this.form.value;
+      if(this.files.length > 1){
+        this.notif.pop('error', 'No tienes permitido subir más de una imagen');
+        return;
+      }
+
+      const data = this.form.getRawValue();
+
+
+      data['ownerId'] = this.tokenService.userId();
+      data['groupId'] = this.groupId;
+
+      data['createdAt'] = new Date();
+
+      if(!data.moment){
+        delete data.finishAt
+        delete data.notifyAt
+      }
+
+      if(!data.title){this.notif.pop('error', 'El titlo es obligatorio.');return;}
+      if(!data.description){this.notif.pop('error', 'La descripción es obligatoria.');return;}
+      if(data.moment && !data.notifyAt){this.notif.pop('error', 'La fecha de notificación es obligatoria.');return;}
+      if(data.moment && !data.finishAt){this.notif.pop('error', 'La fecha de finalización es obligatoria.');return;}
+
+      const media = await this.upload();
+      data['media'] = media;
+
       const r = await this.apiProvider.post({
-        url: `/${this.resourceName}`,
+        url: `/${this.resourceName}/${this.groupId}/${this.subresourceName}`,
         data,
         auth: true
       });
       this.notif.pop('success', 'Publicación creada.');
-      this.router.navigate([`/udg/${this.resourceName}/see/${r._id}`]);
+      this.router.navigate([`/udg/${this.resourceName}/${this.groupId}/${this.subresourceName}/see/${r._id}`]);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  setPostType(value:string){
+    if(value === 'permanent'){
+      this.form.get('moment').setValue(false);
+      this.isMoment = false;
+    }
+    if(value === 'temp'){
+      this.form.get('moment').setValue(true);
+      this.isMoment = true;
     }
   }
 
@@ -140,7 +174,7 @@ export class PostComponent implements OnInit {
     });
 
     this.notif.pop('success', 'Materia eliminada.');
-    this.router.navigate([`/udg/${this.resourceName}`]);
+    this.router.navigate([`/udg/${this.resourceName}/${this.subresourceName}`]);
   }
 
 
@@ -155,11 +189,6 @@ export class PostComponent implements OnInit {
 
   async upload(){
     try {
-      if(this.files.length > 1){
-        this.notif.pop('error', 'No tienes permitido subir más de una imagen');
-        return;
-      }
-
       for(let file_data of this.files){
         const data = new FormData();
         data.append('file', file_data);
@@ -167,10 +196,8 @@ export class PostComponent implements OnInit {
         data.append('upload_preset', 'f5mq6xrq');
 
         const response = await this.cloudinary.upload(data).toPromise();
-        console.log(response.secure_url);
+        return response.secure_url;
       }
-
-
     } catch (error) {
       console.log(error);
     }
