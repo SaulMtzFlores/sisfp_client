@@ -7,7 +7,7 @@
   <hr>
   <section *ngIf="!loading">
     <div>
-      <h4><span class="badge badge-info">{{model.centerId | idField:'/centers':'name' | async}}</span></h4>
+      <h4><span class="badge badge-info">{{model.centerId | idField:'/centers':'acronym' | async}}</span></h4>
       <h1>{{model.name}}</h1>
       <h3 *ngIf="model.acronym">Acrónimo: {{model.acronym}}</h3>
       <h3 *ngIf="!model.acronym">Acrónimo no definido para esta licenciatura.</h3>
