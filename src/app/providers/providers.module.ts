@@ -4,13 +4,15 @@ import { TokenService } from './token';
 import { DefaultLoaderService } from './default-loader';
 import { LocalStorageService } from './local-storage';
 import { NotificationsService } from './notifications';
-import { CloudinaryService } from './cloudinary'
+import { CloudinaryService } from './cloudinary';
+import { TimefixService } from './timefix';
 
 export { TokenService } from './token';
 export { DefaultLoaderService } from './default-loader';
 export { LocalStorageService } from './local-storage';
 export { NotificationsService } from './notifications';
 export { CloudinaryService } from './cloudinary';
+export { TimefixService } from './timefix';
 
 @NgModule({
   declarations: [],
@@ -20,7 +22,8 @@ export { CloudinaryService } from './cloudinary';
     LocalStorageService,
     DefaultLoaderService,
     NotificationsService,
-    CloudinaryService
+    CloudinaryService,
+    TimefixService
   ]
 })
 export class ProvidersModule { }

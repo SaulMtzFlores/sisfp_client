@@ -5,6 +5,7 @@ import { ApiProvider } from 'app/providers/api';
 import { CloudinaryService } from 'app/providers/cloudinary';
 import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
+import { TimefixService } from 'app/providers/timefix';
 import { TokenService } from 'app/providers/token';
 import { Subscription } from 'rxjs';
 
@@ -53,11 +54,13 @@ export class PostComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private detector: ChangeDetectorRef,
     private defaultLoader: DefaultLoaderService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private timefix: TimefixService
   ) { }
 
   async ngOnInit(): Promise<any> {
     try {
+      console.log(await this.timefix.adjustTime(new Date()))
       await this.loadUser();
       this.loading = true;
       await new Promise((resolve) => {
