@@ -4,7 +4,7 @@
     <button *ngIf="allowEdit && !loading" class="btn btn-primary" [routerLink]="['/udg/' + resourceName + '/add']" routerLinkActive="router-link-active" >Crear nuevo</button>
     <form [formGroup]="form">
       <div class="input-group w-75">
-        <input class="form-control heightAdjust" formControlName="search" placeholder="Buscar grupo...">
+        <input class="form-control heightAdjust" formControlName="search" placeholder="Ingresa nombre de grupo o correo/nombre del propietario...">
         <button class="btn btn-secondary" (click)="search()">Buscar</button>
       </div>
     </form>
