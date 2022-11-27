@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiProvider } from 'app/providers/api';
 import { CloudinaryService } from 'app/providers/cloudinary';
 import { DefaultLoaderService } from 'app/providers/default-loader';
 import { NotificationsService } from 'app/providers/notifications';
-import { TimefixService } from 'app/providers/timefix';
 import { TokenService } from 'app/providers/token';
 import { Subscription } from 'rxjs';
 
@@ -15,6 +14,83 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+
+  @HostListener('click')
+  @HostListener('keyup')
+  onClick() {
+    const data = this.form.getRawValue();
+
+    if(data.nAAMPM === 'AM'){
+      if(data.nAhour === 12){
+        data.nAhour = 0;
+      }
+    }
+    if(data.nAAMPM === 'PM'){
+      if(data.nAhour !== 12){
+        data.nAhour += 12;
+      }
+    }
+    if(data.fAAMPM === 'AM'){
+      if(data.fAhour === 12){
+        data.fAhour = 0;
+      }
+    }
+    if(data.fAAMPM === 'PM'){
+      if(data.fAhour !== 12){
+        data.fAhour += 12;
+      }
+    }
+
+    if(
+      typeof data.nAmonth==='number' &&
+      typeof data.nAmonth==='number' &&
+      typeof data.nAday==='number' &&
+      typeof data.nAminute==='number' &&
+      typeof data.nAhour==='number' &&
+      data.nAAMPM
+    ){
+      this.parsedNotifyAt = `${
+        (data.nAmonth < 10) ? '0'+data.nAmonth : data.nAmonth
+      }/${
+        (data.nAday < 10) ? '0'+data.nAday : data.nAday
+      }/${data.nAyear} ${
+        (data.nAhour < 10) ? '0'+data.nAhour : data.nAhour
+      }:${(
+        (data.nAminute < 10) ? '0'+data.nAminute : data.nAminute
+      )}`;
+      this.correctNA = true;
+    }else{
+      this.correctNA = false;
+    }
+
+    if(
+      typeof data.fAmonth==='number' &&
+      typeof data.fAmonth==='number' &&
+      typeof data.fAday==='number' &&
+      typeof data.fAminute==='number' &&
+      typeof data.fAhour==='number' &&
+      data.fAAMPM
+    ){
+      this.parsedFinishAt = `${
+        (data.fAmonth < 10) ? '0'+data.fAmonth : data.fAmonth
+      }/${
+        (data.fAday < 10) ? '0'+data.fAday : data.fAday
+      }/${data.fAyear} ${
+        (data.fAhour < 10) ? '0'+data.fAhour : data.fAhour
+      }:${(
+        (data.fAminute < 10) ? '0'+data.fAminute : data.fAminute
+      )}`;
+      this.correctFA = true;
+    }else{
+      this.correctFA = false;
+    }
+  };
+
+
+  parsedNotifyAt:any;
+  correctNA:any;
+  parsedFinishAt:any;
+  correctFA:any;
 
   resourceName = 'groups';
   subresourceName = 'posts';
@@ -37,8 +113,18 @@ export class PostComponent implements OnInit {
     title: new FormControl(null, Validators.nullValidator),
     description: new FormControl(null, Validators.nullValidator),
     moment: new FormControl(false, Validators.nullValidator),
-    finishAt: new FormControl(null, Validators.nullValidator),
-    notifyAt: new FormControl(null, Validators.nullValidator),
+    fAday: new FormControl(null, Validators.nullValidator),
+    fAmonth: new FormControl(null, Validators.nullValidator),
+    fAyear: new FormControl((new Date()).getFullYear(), Validators.nullValidator),
+    fAhour: new FormControl(null, Validators.nullValidator),
+    fAminute: new FormControl(null, Validators.nullValidator),
+    fAAMPM: new FormControl(null, Validators.nullValidator),
+    nAday: new FormControl(null, Validators.nullValidator),
+    nAmonth: new FormControl(null, Validators.nullValidator),
+    nAyear: new FormControl((new Date()).getFullYear(), Validators.nullValidator),
+    nAhour: new FormControl(null, Validators.nullValidator),
+    nAminute: new FormControl(null, Validators.nullValidator),
+    nAAMPM: new FormControl(null, Validators.nullValidator),
   });
 
   centers:any
@@ -54,13 +140,11 @@ export class PostComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private detector: ChangeDetectorRef,
     private defaultLoader: DefaultLoaderService,
-    private tokenService: TokenService,
-    private timefix: TimefixService
+    private tokenService: TokenService
   ) { }
 
   async ngOnInit(): Promise<any> {
     try {
-      console.log(await this.timefix.adjustTime(new Date()))
       await this.loadUser();
       this.loading = true;
       await new Promise((resolve) => {
@@ -137,20 +221,50 @@ export class PostComponent implements OnInit {
 
       if(!data.title){this.notif.pop('error', 'El titlo es obligatorio.');return;}
       if(!data.description){this.notif.pop('error', 'La descripción es obligatoria.');return;}
-      if(data.moment && !data.notifyAt){this.notif.pop('error', 'La fecha de notificación es obligatoria.');return;}
-      if(data.moment && !data.finishAt){this.notif.pop('error', 'La fecha de finalización es obligatoria.');return;}
 
       const media = await this.upload();
       data['media'] = media;
 
-      if(data.moment && data.notifyAt){
-        data['notifyAt'] = new Date(data.notifyAt);
+      if(data.moment && !this.correctNA){
+        this.notif.pop('error', 'Fecha de notificaciones incorrecta.');
+        return;
+      }
+      if(data.moment && !this.correctFA){
+        this.notif.pop('error', 'Fecha de cierre incorrecta');
+        return;
       }
 
-      if(data.moment && data.finishAt){
-        data['finishAt'] = new Date(data.finishAt)
+      if(data.moment && this.correctNA){
+        const {nAday, nAmonth, nAyear, nAhour, nAminute } = data;
+        if(nAday>=1 && nAday<=31 && nAmonth >=1 && nAmonth <=12 && nAyear >= 2022 && nAyear <= 2100 && nAhour >= 1 && nAhour <= 12 && nAminute >= 0 && nAminute <=59){
+          data['notifyAt'] = new Date(this.parsedNotifyAt);
+        }else{
+          this.notif.pop('error', 'La fecha de notificación es incorrecta.');
+          return;
+        }
       }
-      console.log(data);
+
+      if(data.moment && this.correctFA){
+        const {fAday, fAmonth, fAyear, fAhour, fAminute } = data;
+        if(fAday>=1 && fAday<=31 && fAmonth >=1 && fAmonth <=12 && fAyear >= 2022 && fAyear <= 2100 && fAhour >= 1 && fAhour <= 12 && fAminute >= 0 && fAminute <=59){
+          data['finishAt'] = new Date(this.parsedFinishAt);
+        }else{
+          this.notif.pop('error', 'La fecha de cierre es incorrecta.');
+          return;
+        }
+      }
+      delete data['fAday'];
+      delete data['fAmonth'];
+      delete data['fAyear'];
+      delete data['fAhour'];
+      delete data['fAminute'];
+      delete data['fAAMPM'];
+      delete data['nAday'];
+      delete data['nAmonth'];
+      delete data['nAyear'];
+      delete data['nAhour'];
+      delete data['nAminute'];
+      delete data['nAAMPM'];
 
       const r = await this.apiProvider.post({
         url: `/${this.resourceName}/${this.groupId}/${this.subresourceName}`,
@@ -213,6 +327,14 @@ export class PostComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  setnAAMPM(value){
+    this.form.get('nAAMPM').setValue(value)
+  }
+
+  setfAAMPM(value){
+    this.form.get('fAAMPM').setValue(value)
   }
 
 }

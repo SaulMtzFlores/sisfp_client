@@ -1,3 +1,11 @@
 .paddingfix{
   margin-bottom: 32px !important;
 }
+
+.heightAdjust{
+  height: 24px !important;
+}
+
+.datePickInput{
+  width: 96px !important
+}

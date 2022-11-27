@@ -26,10 +26,41 @@
         <div *ngIf="isMoment">
           <h5>Fecha de notificación:</h5>
           <small>Los usuarios recibirán un correo electrónico con un recordatorio a partir de la fecha y hora designada</small>
-          <input class="form-control w-50 mb-4" formControlName="notifyAt"/>
+          <div class="d-flex flex-row align-middle">
+            <p>Fecha:</p>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Día" min="1" max="31" type="number" formControlName="nAday"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Mes" min="1" max="12" type="number" formControlName="nAmonth"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Año" min="2022" max="2100" type="number" formControlName="nAyear"/>
+            <p>&nbsp; Hora:</p>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Hora" min="1" max="12" type="number" formControlName="nAhour"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Minuto" min="0" max="59" type="number" formControlName="nAminute"/>
+            <select class="form-select paddingfix" (change)="setnAAMPM($event.target.value)">
+              <option class="w-50" value="" selected>am/pm</option>
+              <option class="w-50" value="AM">am</option>
+              <option class="w-50" value="PM">pm</option>
+            </select>
+            <p *ngIf="correctNA">&nbsp;Notificaciones: {{parsedNotifyAt}}</p>
+            <p *ngIf="!correctNA">&nbsp;Hora aún no establecida...</p>
+          </div>
 
           <h5>Fecha de finalización de publicación:</h5>
-          <input class="form-control w-50 mb-4" formControlName="finishAt"/>
+          <small>Esta publicación ya no será visible a partir de la fecha y hora designada</small>
+          <div class="d-flex flex-row align-middle">
+            <p>Fecha:</p>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Día" min="1" max="31" type="number" formControlName="fAday"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Mes" min="1" max="12" type="number" formControlName="fAmonth"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Año" min="2022" max="2100" type="number" formControlName="fAyear"/>
+            <p>&nbsp; Hora:</p>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Hora" min="1" max="12" type="number" formControlName="fAhour"/>
+            <input class="form-control mb-4 datePickInput heightAdjust" placeholder="Minuto" min="0" max="59" type="number" formControlName="fAminute"/>
+            <select class="form-select paddingfix" (change)="setfAAMPM($event.target.value)">
+              <option class="w-50" value="" selected>am/pm</option>
+              <option class="w-50" value="AM">am</option>
+              <option class="w-50" value="PM">pm</option>
+            </select>
+            <p *ngIf="correctFA">&nbsp;Cierra: {{parsedFinishAt}}</p>
+            <p *ngIf="!correctFA">&nbsp;Hora aún no establecida...</p>
+          </div>
         </div>
 
       </div>
