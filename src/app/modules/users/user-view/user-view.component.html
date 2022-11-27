@@ -9,13 +9,11 @@
     <div>
       <h4><span class="badge badge-info">{{model.centerId | idField:'/centers':'acronym' | async}}</span></h4>
       <h1>{{model.name}}</h1>
-      <h3>{{model.email}}</h3>
-      <h3>
-        Rol asignado:
-        {{model.roleId | idField:'/roles':'name' | async}}
-      </h3>
-      <h4 *ngIf="model.active">Estado del usuario: <b class="active">ACTIVO</b></h4>
-      <h4 *ngIf="!model.active">Estado del usuario: <b class="inactive">INACTIVO</b></h4>
+      <h6>{{model.email}}</h6>
+      <hr>
+      <h5> Rol asignado: {{model.roleId | idField:'/roles':'name' | async}} </h5>
+      <h5 *ngIf="model.active">Estado del usuario: <b class="active">ACTIVO</b></h5>
+      <h5 *ngIf="!model.active">Estado del usuario: <b class="inactive">INACTIVO</b></h5>
     </div>
   </section>
 </div>
