@@ -57,7 +57,8 @@ export class HomeComponent implements OnInit {
 
       const params:any = {
         paginationPage: this.paginationPage,
-        paginationPerPage: this.paginationPerPage
+        paginationPerPage: this.paginationPerPage,
+        notIncludeOwn: true
       }
 
       if(searchData.search){
