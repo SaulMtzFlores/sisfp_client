@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     private notif: NotificationsService,
     private defaultLoader: DefaultLoaderService,
     private tokenService: TokenService
-  ) { }
+  ) { localStorage.removeItem('email'); }
 
   async ngOnInit(): Promise<any> {
     try {

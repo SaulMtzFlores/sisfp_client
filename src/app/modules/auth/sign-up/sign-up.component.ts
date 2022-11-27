@@ -35,6 +35,7 @@ export class SignUpComponent implements OnInit {
   async register(){
     try {
       const data = this.form.value;
+      localStorage.setItem('email', data.email);
       const response = await this.apiProvider.post({
         url:`/users`,
         data,

@@ -22,7 +22,7 @@ export class RedeemComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      email: new FormControl(null),
+      email: new FormControl(localStorage.getItem('email')),
       code: new FormControl(null)
     })
   }
