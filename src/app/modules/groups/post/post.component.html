@@ -41,7 +41,7 @@
               <option class="w-50" value="PM">pm</option>
             </select>
             <p *ngIf="correctNA">&nbsp;Notificaciones: {{parsedNotifyAt}}</p>
-            <p *ngIf="!correctNA">&nbsp;Hora aún no establecida...</p>
+            <p *ngIf="!correctNA">&nbsp;Fecha incompleta...</p>
           </div>
 
           <h5>Fecha de finalización de publicación:</h5>
@@ -61,7 +61,7 @@
               <option class="w-50" value="PM">pm</option>
             </select>
             <p *ngIf="correctFA">&nbsp;Cierra: {{parsedFinishAt}}</p>
-            <p *ngIf="!correctFA">&nbsp;Hora aún no establecida...</p>
+            <p *ngIf="!correctFA">&nbsp;Fecha incompleta...</p>
           </div>
         </div>
 
