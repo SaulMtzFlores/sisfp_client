@@ -18,6 +18,9 @@ export class PostComponent implements OnInit {
   @HostListener('click')
   @HostListener('keyup')
   onClick() {
+    this.validateLogic();
+  };
+  validateLogic(){
     const data = this.form.getRawValue();
 
     if(data.nAAMPM === 'AM'){
@@ -84,8 +87,7 @@ export class PostComponent implements OnInit {
     }else{
       this.correctFA = false;
     }
-  };
-
+  }
 
   parsedNotifyAt:any;
   correctNA:any;
@@ -201,6 +203,8 @@ export class PostComponent implements OnInit {
 
   async save(){
     try {
+      this.validateLogic();
+
       if(this.files.length > 1){
         this.notif.pop('error', 'No tienes permitido subir más de una imagen');
         return;
