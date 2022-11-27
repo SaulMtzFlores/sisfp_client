@@ -24,12 +24,12 @@
         </select>
 
         <div *ngIf="isMoment">
-          <h5>Fecha de finalización de publicación:</h5>
-          <input class="form-control w-50 mb-4" type="datetime-local" formControlName="finishAt"/>
-
           <h5>Fecha de notificación:</h5>
           <small>Los usuarios recibirán un correo electrónico con un recordatorio a partir de la fecha y hora designada</small>
-          <input class="form-control w-50 mb-4" type="datetime-local" formControlName="notifyAt"/>
+          <input class="form-control w-50 mb-4" formControlName="notifyAt"/>
+
+          <h5>Fecha de finalización de publicación:</h5>
+          <input class="form-control w-50 mb-4" formControlName="finishAt"/>
         </div>
 
       </div>

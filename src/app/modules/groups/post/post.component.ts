@@ -143,6 +143,15 @@ export class PostComponent implements OnInit {
       const media = await this.upload();
       data['media'] = media;
 
+      if(data.moment && data.notifyAt){
+        data['notifyAt'] = new Date(data.notifyAt);
+      }
+
+      if(data.moment && data.finishAt){
+        data['finishAt'] = new Date(data.finishAt)
+      }
+      console.log(data);
+
       const r = await this.apiProvider.post({
         url: `/${this.resourceName}/${this.groupId}/${this.subresourceName}`,
         data,
