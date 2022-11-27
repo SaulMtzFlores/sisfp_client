@@ -27,7 +27,8 @@ export const AdminLayoutRoutes: Routes = [
       children: [
         { path: '', component: UsersComponent, canActivate: [Guard] },
         { path: 'see/:id', component: UserViewComponent, canActivate: [Guard] },
-        { path: 'edit/:id', component: UserComponent, canActivate: [Guard] }
+        { path: 'edit/:id', component: UserComponent, canActivate: [Guard] },
+        { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },
     {
@@ -38,7 +39,7 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'see/:id', component: CenterViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: CenterComponent, canActivate: [Guard] },
         { path: 'add', component: CenterComponent, canActivate: [Guard] },
-        { path: '**', pathMatch: 'full', redirectTo: 'centers' }
+        { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },
     {
@@ -49,7 +50,7 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'see/:id', component: DegreeViewComponent, canActivate: [Guard] },
         { path: 'edit/:id', component: DegreeComponent, canActivate: [Guard] },
         { path: 'add', component: DegreeComponent, canActivate: [Guard] },
-        { path: '**', pathMatch: 'full', redirectTo: 'centers' }
+        { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },
     {
