@@ -42,8 +42,8 @@
           </div>
 
           <h5>Autor: {{model.ownerId | idField:'/users':'name' | async}}.</h5>
-          <p *ngIf="model.moment">Notificaciones: <span class="badge badge-success">Activas</span></p>
-          <p *ngIf="!model.moment">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
+          <p *ngIf="!model.notified">Notificaciones: <span class="badge badge-success">Activas</span></p>
+          <p *ngIf="model.notified">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
           <button class="card-link btn btn-primary" (click)="routerGo(model._id)">Ver</button>
         </div>
       </div>

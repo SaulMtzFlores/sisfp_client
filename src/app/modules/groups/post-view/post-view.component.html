@@ -14,8 +14,8 @@
           <img class="imgPreview my-4" [src]="model.media">
 
           <h5>Autor: {{model.ownerId | idField:'/users':'name' | async}}.</h5>
-          <p *ngIf="model.moment">Notificaciones: <span class="badge badge-success">Activas</span></p>
-          <p *ngIf="!model.moment">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
+          <p *ngIf="!model.notified">Notificaciones: <span class="badge badge-success">Activas</span></p>
+          <p *ngIf="model.notified">Notificaciones: <span class="badge badge-secondary">Desactivadas</span></p>
         </div>
       </div>
       <div class="col">
