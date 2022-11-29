@@ -10,6 +10,7 @@
         <div>
           <p>{{model.createdAt | esdate }} </p>
           <h5 class="card-title">{{model.title}}</h5>
+          <h6>Aplausos: {{model.applauses}}</h6><br>
           <p class="text-muted mr-auto">{{model.description}}</p>
           <img class="imgPreview my-4" [src]="model.media">
 
@@ -23,6 +24,7 @@
           <div class="form-group input-group">
             <input class="form-control w-50 heightAdjust" formControlName="comment" placeholder="Escribe lo que piensas.">
             <button class="btn btn-primary" submit (click)="comment()">Comentar</button>
+            <button class="btn btn-info" (click)="applause()" *ngIf="!loading" [disabled]="disabled">Aplaudir <i class="nc-icon nc-satisfied"></i></button>
           </div>
         </form>
         <div>

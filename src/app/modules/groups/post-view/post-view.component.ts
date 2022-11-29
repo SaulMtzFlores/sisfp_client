@@ -18,6 +18,7 @@ export class PostViewComponent implements OnInit {
   subresourceName = 'posts';
 
   loading: boolean = false;
+  disabled: boolean = false;
 
   listenerParams: Subscription;
 
@@ -154,5 +155,17 @@ export class PostViewComponent implements OnInit {
     }else{
       this.notif.pop('error', 'Algo salió mal, intentalo nuevamente.');
     }
+  }
+
+  async applause(){
+    this.disabled = true;
+    await this.apiProvider.post({
+      url: `/${this.resourceName}/${this.groupId}/${this.subresourceName}/${this.modelId}/applause`,
+      auth: true,
+      data: {}
+    });
+
+    this.disabled = false;
+    window.location.reload();
   }
 }

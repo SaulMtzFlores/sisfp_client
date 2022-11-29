@@ -19,6 +19,7 @@ import { GroupComponent } from 'app/modules/groups/group/group.component';
 import { PostsComponent } from 'app/modules/groups/posts/posts.component';
 import { PostComponent } from 'app/modules/groups/post/post.component';
 import { PostViewComponent } from 'app/modules/groups/post-view/post-view.component';
+import { CalendarComponent } from 'app/modules/calendar/calendar/calendar.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -75,6 +76,14 @@ export const AdminLayoutRoutes: Routes = [
         { path: ':groupId/posts', component: PostsComponent, canActivate: [Guard] },
         { path: ':groupId/posts/see/:id', component: PostViewComponent, canActivate: [Guard] },
         { path: ':groupId/posts/add', component: PostComponent, canActivate: [Guard] },
+        { path: '**', pathMatch: 'full', redirectTo: '' }
+      ]
+    },
+    {
+      path: 'calendar',
+      loadChildren: () => import ('../../modules/calendar/calendar.module').then(m => m.CalendarModule),
+      children: [
+        { path: '', component: CalendarComponent, canActivate: [Guard] },
         { path: '**', pathMatch: 'full', redirectTo: '' }
       ]
     },

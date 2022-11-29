@@ -8,7 +8,8 @@ export const ROUTES: RouteInfo[] = [
     { path: 'centers', title: 'Centros', icon: 'nc-bank', class: '' },
     { path: 'degrees', title: 'Licenciaturas', icon: 'nc-touch-id', class: '' },
     { path: 'subjects', title: 'Materias', icon: 'nc-app', class: '' },
-    { path: 'users', title: 'Usuarios', icon: 'nc-circle-10', class: '' }
+    { path: 'users', title: 'Usuarios', icon: 'nc-circle-10', class: '' },
+    { path: 'calendar', title: 'Calendario', icon: 'nc-calendar-60', class:'' }
 ];
 
 @Component({
